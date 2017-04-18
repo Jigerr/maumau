@@ -5,7 +5,7 @@ import de.berlin.htw.kba.maumau.engine.MauMasterImpl;
 import de.berlin.htw.kba.maumau.model.Stack;
 
 
-public class Main {
+public class MauMauApplication {
 	
 	//private MauMaster mauMaster;
 
