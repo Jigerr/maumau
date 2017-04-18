@@ -18,7 +18,7 @@
 		<div class="starter-template">
 			<h1>Spring Boot Web MauMau</h1>
 			<h2>
-				<span th:text="'Message: ' + ${message}"></span>
+				 <li th:each="data : ${datas}" th:text="${data.getRank() + ' of ' + data.getSuit()}"></li>
 			</h2>
 		</div>
 
