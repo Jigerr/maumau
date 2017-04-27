@@ -1,20 +1,19 @@
 package de.berlin.htw.kba.maumau;
 
-import de.berlin.htw.kba.maumau.engine.MauMaster;
-import de.berlin.htw.kba.maumau.engine.MauMasterImpl;
+import de.berlin.htw.kba.maumau.engine.CardMaster;
+import de.berlin.htw.kba.maumau.engine.CardMasterImpl;
 import de.berlin.htw.kba.maumau.model.Stack;
 
-
 public class MauMauApplication {
-	
-	//private MauMaster mauMaster;
+
+    //private MauMaster mauMaster;
 
     public static void main(String[] args) {
 
         Stack stack = new Stack();
         System.out.println("Anzahl der Karten im Stack: " + stack.amountOfCards());
 
-        MauMaster mauMaster = new MauMasterImpl();
+        CardMaster mauMaster = new CardMasterImpl();
 
         mauMaster.initDeck(stack);
 

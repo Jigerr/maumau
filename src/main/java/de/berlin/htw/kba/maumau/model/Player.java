@@ -4,20 +4,13 @@ import java.util.LinkedList;
 
 public class Player {
 
-    private String name;
-    private LinkedList<Card> hand;
+    private String currentAccount;
+    private String PlayerId;
+    private LinkedList<Card> hand = new LinkedList<>();
 
-    public Player(String name) {
-        this.name = name;
-        this.hand = new LinkedList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Player(String playerId, String accountId) {
+        this.PlayerId = playerId;
+        this.currentAccount = accountId;
     }
 
     public LinkedList<Card> getHand() {
@@ -32,5 +25,20 @@ public class Player {
         this.hand.add(newCard);
     }
 
+    public String getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(String accountId) {
+        this.currentAccount = accountId;
+    }
+
+    public String getPlayerId() {
+        return PlayerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        PlayerId = playerId;
+    }
 
 }
