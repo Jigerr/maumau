@@ -1,4 +1,4 @@
-package de.berlin.htw.kba.maumau.engine;
+package de.berlin.htw.kba.maumau.cardmaster.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ public class CardMasterImpl implements CardMaster {
     public Stack initDeck(Stack stack) {
 
         // auslagern als enum
-        List<String> suits = new ArrayList<>(Arrays.asList("Heart", "Diamond", "Club", "Spade"));
+        List<String> suits = new ArrayList<>(Arrays.asList("Hearts", "Diamonds", "Clubs", "Spades"));
 
         // auslagern als enum
         List<String> ranks = new ArrayList<>(Arrays.asList("7", "8", "9", "10", "Jack", "Queen", "King", "Ace"));

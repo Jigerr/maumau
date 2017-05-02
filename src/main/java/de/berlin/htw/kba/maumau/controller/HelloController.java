@@ -8,8 +8,8 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.berlin.htw.kba.maumau.engine.CardMaster;
-import de.berlin.htw.kba.maumau.engine.CardMasterImpl;
+import de.berlin.htw.kba.maumau.cardmaster.service.CardMaster;
+import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterImpl;
 import de.berlin.htw.kba.maumau.model.Stack;
 
 @RestController
