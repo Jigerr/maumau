@@ -1,4 +1,4 @@
-package de.berlin.htw.kba.maumau.controller;
+package de.berlin.htw.kba.maumau;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,9 +8,9 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.berlin.htw.kba.maumau.cardmaster.service.CardMaster;
-import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterImpl;
-import de.berlin.htw.kba.maumau.model.Stack;
+import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
+import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
+import de.berlin.htw.kba.maumau.table.db.Stack;
 
 @RestController
 public class HelloController {
@@ -19,9 +19,10 @@ public class HelloController {
     public Map<String, String> index() {
 
         Stack stack = new Stack();
-        CardMaster mauMaster = new CardMasterImpl();
-        mauMaster.initDeck(stack);
-        mauMaster.shuffleDeck(stack);
+        CardMasterService mauMaster = new CardMasterServiceImpl();
+        mauMaster.fillStack(stack);
+        mauMaster.shuffleStack(stack);
+        mauMaster.showCards(stack);
         
 
         Map<String,String> myMap = new HashMap<String, String>();
@@ -34,9 +35,9 @@ public class HelloController {
     public List<String> stack() {
 
         Stack stack = new Stack();
-        CardMaster mauMaster = new CardMasterImpl();
-        mauMaster.initDeck(stack);
-        mauMaster.shuffleDeck(stack);
+        CardMasterService mauMaster = new CardMasterServiceImpl();
+        mauMaster.fillStack(stack);
+        mauMaster.shuffleStack(stack);
         
         List<String> list = new ArrayList<String>();
         list.add("Hallo");

@@ -1,4 +1,4 @@
-package de.berlin.htw.kba.maumau.model;
+package de.berlin.htw.kba.maumau.account.db;
 
 public class Account {
 

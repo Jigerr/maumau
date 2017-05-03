@@ -14,11 +14,11 @@ public enum Conditions {
 	WISH_CLUBS("Clubs");
 	
 	private String condition;
-	
+
 	Conditions(String condition) {
 		this.condition = condition;
 	}
-	
+
 	public String getValue() {
 		return condition;
 	}

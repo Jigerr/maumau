@@ -1,4 +1,4 @@
-package de.berlin.htw.kba.maumau.model;
+package de.berlin.htw.kba.maumau.table.db;
 
 public class Card {
     private String suit;

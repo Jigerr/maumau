@@ -9,22 +9,22 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.berlin.htw.kba.maumau.model.Card;
 import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
-import de.berlin.htw.kba.maumau.ruleset.service.RuleSet;
-import de.berlin.htw.kba.maumau.ruleset.service.RuleSetImpl;
+import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
+import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
+import de.berlin.htw.kba.maumau.table.db.Card;
 
 @RunWith(Parameterized.class)
-public class RuleSetTest {
+public class RuleSetServiceTurnAllowedTest {
 
-	private RuleSet ruleSet = new RuleSetImpl();
+	private RuleSetService ruleSet = new RuleSetServiceImpl();
 	
 	private Card currentCard;
 	private Card lastPlayedCard;
 	private Conditions condition;
 	private Boolean expectedResult;
 	
-	public RuleSetTest(Card currentCard, Card lastPlayedCard, Conditions condition, boolean expectedResult) {
+	public RuleSetServiceTurnAllowedTest(Card currentCard, Card lastPlayedCard, Conditions condition, boolean expectedResult) {
 		this.currentCard = currentCard;
 		this.lastPlayedCard = lastPlayedCard;
 		this.condition = condition;
