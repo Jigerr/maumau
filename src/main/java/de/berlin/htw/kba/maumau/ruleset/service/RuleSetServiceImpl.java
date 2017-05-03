@@ -2,10 +2,11 @@ package de.berlin.htw.kba.maumau.ruleset.service;
 
 import org.springframework.stereotype.Service;
 
+import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.table.db.Card;
 
 @Service
-public class RuleSetServiceImpl implements RuleSetService {
+public class RuleSetServiceImpl implements RuleSetService {	
 
 	@Override
 	public boolean turnAllowed(Card currentCard, Card lastPlayedCard, Conditions condition) {
@@ -43,17 +44,15 @@ public class RuleSetServiceImpl implements RuleSetService {
 
 	@Override
 	public CardEffects getCardEffect(Card currentCard) {
-
-		if(currentCard.getRank().equals("7")) {
+		if(currentCard.getRank().equals(Ranks.SEVEN.getRank())) {
 			return CardEffects.PLUS_TWO;
-		} else if(currentCard.getRank().equals("Jack")) {
+		} else if(currentCard.getRank().equals(Ranks.JACK.getRank())) {
 			return CardEffects.WISH;
-		} else if(currentCard.getRank().equals("Ace")) {
+		} else if(currentCard.getRank().equals(Ranks.ACE.getRank())) {
 			return CardEffects.SKIP;
 		} else {
 			return CardEffects.NO_EFFECT;
-		}
-		
+		}		
 	}
 
 	private boolean checkBasicRules(Card currentCard, Card lastPlayedCard) {

@@ -21,12 +21,12 @@ public class CardMasterServiceTest {
 	public void initStack() {
 		stack = new Stack();
 		cardMaster.fillStack(stack);
+		//100% coverage
 		cardMaster.showCards(stack);
 	}
 
 	@Test
-	public void testIfStackIsFilled() {
-		
+	public void testIfStackIsFilled() {		
 		Assert.assertFalse(stack.getStack().isEmpty());
 	}
 
