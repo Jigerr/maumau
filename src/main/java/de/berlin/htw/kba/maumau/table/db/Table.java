@@ -2,28 +2,28 @@ package de.berlin.htw.kba.maumau.table.db;
 
 import java.util.LinkedList;
 
-import de.berlin.htw.kba.maumau.ruleset.service.CardEffects;
+import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
 
-public class Round {
+public class Table {
 
-	private Float gameID;
-	private Stack drawingStack;
-	private Stack playingStack;
+	private String tableID;
+	private Stack drawingStack = new Stack();
+	private Stack playingStack = new Stack();
 	private LinkedList<Player> player = new LinkedList<>();
 	private String currentPlayer;
 	private Boolean gameDirectionClockwise = true;
 	private Boolean gameOver = false;
-	private CardEffects cardEffect;
+	private Conditions conditions = Conditions.NO_EFFECT;
 
-	public Round() {
+	public Table() {
 	}
 
-	public Float getGameID() {
-		return gameID;
+	public String getTableID() {
+		return tableID;
 	}
 
-	public void setGameID(Float gameID) {
-		this.gameID = gameID;
+	public void setTableID(String tableID) {
+		this.tableID = tableID;
 	}
 
 	public Stack getDrawingStack() {
@@ -42,7 +42,7 @@ public class Round {
 		this.playingStack = playingStack;
 	}
 
-	public LinkedList<Player> getPlayer() {
+	public LinkedList<Player> getPlayers() {
 		return player;
 	}
 
@@ -74,12 +74,11 @@ public class Round {
 		this.gameOver = gameOver;
 	}
 
-	public CardEffects getCardEffect() {
-		return cardEffect;
-	}
+    public Conditions getConditions() {
+        return conditions;
+    }
 
-	public void setCardEffect(CardEffects cardEffect) {
-		this.cardEffect = cardEffect;
-	}
-
+    public void setConditions(Conditions conditions) {
+        this.conditions = conditions;
+    }
 }

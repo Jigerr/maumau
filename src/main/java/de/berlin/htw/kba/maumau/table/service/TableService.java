@@ -1,6 +1,9 @@
 package de.berlin.htw.kba.maumau.table.service;
 
+import java.util.List;
+
 import de.berlin.htw.kba.maumau.table.db.Card;
+import de.berlin.htw.kba.maumau.table.db.Table;
 
 public interface TableService {
 	
@@ -11,5 +14,9 @@ public interface TableService {
 	void callMau(String tableId, String accountId);
 	
 	void endTurn(String tableId, String accountId);
+
+    List<Table> getOpenTables();
+
+    void setOpenTables(List<Table> openTables);
 
 }

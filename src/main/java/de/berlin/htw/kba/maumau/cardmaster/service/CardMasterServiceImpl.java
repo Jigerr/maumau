@@ -3,6 +3,7 @@ package de.berlin.htw.kba.maumau.cardmaster.service;
 import java.util.LinkedList;
 
 import de.berlin.htw.kba.maumau.table.db.Card;
+import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
 public class CardMasterServiceImpl implements CardMasterService {
@@ -41,6 +42,14 @@ public class CardMasterServiceImpl implements CardMasterService {
 		stack.setStack(temp);
 
 		return stack;
+	}
+	
+	@Override
+	public void fillHands(Player player, Stack drawingStack) {
+	    for(int i = 0; i<5; i++) {
+	        player.addCard(drawingStack.getStack().getLast());
+	        drawingStack.getStack().removeLast();
+	    }
 	}
 
 	@Override
