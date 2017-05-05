@@ -9,12 +9,15 @@ import org.junit.Test;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
+import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
 public class CardMasterServiceTest {
 
 	private CardMasterService cardMaster = new CardMasterServiceImpl();
 	private Stack stack;
+	private static final String PLAYER_ONE_ID = "1";
+	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
 	private static final int DECK_SIZE = 32;
 
 	@Before
@@ -47,6 +50,13 @@ public class CardMasterServiceTest {
 		// Assert.assertEquals(originalStack, stack.getStack());
 		cardMaster.shuffleStack(stack);
 		Assert.assertNotEquals(originalStack, stack.getStack());
+	}
+	
+	@Test
+	public void testIfPlayerHandIsFilled() {
+		Player player = new Player(PLAYER_ONE_ID, PLAYER_ONE_ACCOUNT_ID);
+		cardMaster.fillHands(player, stack);
+		Assert.assertTrue(player.getHand().size() == 5);		
 	}
 	
 	

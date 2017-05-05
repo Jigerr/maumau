@@ -3,10 +3,10 @@ package de.berlin.htw.kba.maumau.ruleset.service;
 public enum Conditions {
 
 	NO_EFFECT("NO_EFFECT"),
-	PLUS_TWO("PLUS_TWO"),
-	PLUS_FOUR("PLUS_FOUR"),
-	PLUS_SIX("PLUS_SIX"),
-	PLUS_EIGHT("PLUS_EIGHT"),
+	PLUS_TWO("2"),
+	PLUS_FOUR("4"),
+	PLUS_SIX("6"),
+	PLUS_EIGHT("8"),
 	SKIP("SKIP"),
 	WISH_HEARTS("Hearts"),
 	WISH_SPADES("Spades"),

@@ -5,18 +5,58 @@ import java.util.List;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Table;
 
+/**
+ * The Interface TableService.
+ */
 public interface TableService {
-	
-	Card drawCard(String tableId, String accountId);
-	
+
+	/**
+	 * Draw cards.
+	 *
+	 * @param tableId
+	 *            the table id
+	 * @param accountId
+	 *            the account id
+	 */
+	void drawCards(String tableId, String accountId);
+
+	/**
+	 * Play card.
+	 *
+	 * @param tableId
+	 *            the table id
+	 * @param accountId
+	 *            the account id
+	 * @param currentCard
+	 *            the current card
+	 * @return true, if successful
+	 */
 	boolean playCard(String tableId, String accountId, Card currentCard);
-	
+
+	/**
+	 * Call mau.
+	 *
+	 * @param tableId
+	 *            the table id
+	 * @param accountId
+	 *            the account id
+	 */
 	void callMau(String tableId, String accountId);
-	
-	void endTurn(String tableId, String accountId);
 
-    List<Table> getOpenTables();
+	/**
+	 * Gets the open tables.
+	 *
+	 * @return the open tables
+	 */
+	// temopräre Methoden
+	List<Table> getOpenTables();
 
-    void setOpenTables(List<Table> openTables);
+	/**
+	 * Sets the open tables.
+	 *
+	 * @param openTables
+	 *            the new open tables
+	 */
+	void setOpenTables(List<Table> openTables);
 
 }
