@@ -29,9 +29,8 @@ public interface TableService {
 	 *            the account id
 	 * @param currentCard
 	 *            the current card
-	 * @return true, if successful
 	 */
-	boolean playCard(String tableId, String accountId, Card currentCard);
+	void playCard(String tableId, String accountId, Card currentCard);
 
 	/**
 	 * Call mau.

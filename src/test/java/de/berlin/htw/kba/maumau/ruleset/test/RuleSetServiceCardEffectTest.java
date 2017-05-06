@@ -42,11 +42,11 @@ public class RuleSetServiceCardEffectTest {
 	
 	@Test
 	public void testGetCardEffect() {
-		
-		//get 100% coverage		
+
+		// get 100% coverage
 		CardEffects.valueOf(CardEffects.NO_EFFECT.toString());
-		
+
 		Assert.assertEquals(expectedResult, ruleSet.getCardEffect(currentCard));
 	}
-	
+
 }

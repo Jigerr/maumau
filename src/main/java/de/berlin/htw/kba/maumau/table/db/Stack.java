@@ -2,7 +2,6 @@ package de.berlin.htw.kba.maumau.table.db;
 
 import java.util.LinkedList;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Stack.
  */
@@ -30,7 +29,8 @@ public class Stack {
 	/**
 	 * Sets the stack.
 	 *
-	 * @param deck the new stack
+	 * @param deck
+	 *            the new stack
 	 */
 	public void setStack(LinkedList<Card> deck) {
 		this.stack = deck;

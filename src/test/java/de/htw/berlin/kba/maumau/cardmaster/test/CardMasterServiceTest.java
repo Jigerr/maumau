@@ -24,12 +24,10 @@ public class CardMasterServiceTest {
 	public void initStack() {
 		stack = new Stack();
 		cardMaster.fillStack(stack);
-		//100% coverage
-		cardMaster.showCards(stack);
 	}
 
 	@Test
-	public void testIfStackIsFilled() {		
+	public void testIfStackIsFilled() {
 		Assert.assertFalse(stack.getStack().isEmpty());
 	}
 
@@ -37,7 +35,7 @@ public class CardMasterServiceTest {
 	public void testIfFilledWith32Cards() {
 		Assert.assertTrue(stack.getStack().size() == DECK_SIZE);
 	}
-	
+
 	@Test
 	public void testIfFilledWith32Cards2() {
 		cardMaster.fillStack(stack);
@@ -51,14 +49,12 @@ public class CardMasterServiceTest {
 		cardMaster.shuffleStack(stack);
 		Assert.assertNotEquals(originalStack, stack.getStack());
 	}
-	
+
 	@Test
 	public void testIfPlayerHandIsFilled() {
 		Player player = new Player(PLAYER_ONE_ID, PLAYER_ONE_ACCOUNT_ID);
 		cardMaster.fillHands(player, stack);
-		Assert.assertTrue(player.getHand().size() == 5);		
+		Assert.assertTrue(player.getHand().size() == 5);
 	}
-	
-	
 
 }
