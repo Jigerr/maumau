@@ -10,6 +10,8 @@ import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
 import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
+import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
+import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Table;
@@ -18,15 +20,13 @@ import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
 public class TableServiceTest2 {
 
-	private static final String PLAYER_ONE_ID = "1";
-	private static final String PLAYER_TWO_ID = "2";
 	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
 	private static final String PLAYER_TWO_ACCOUNT_ID = "2";
 	private static final String TABLE_ID = "1";
 
-	private CardMasterService cardMasterService = new CardMasterServiceImpl();
-
-	private TableService tableService = new TableServiceImpl();
+	private CardMasterService cardMasterService;
+    private TableDummyService tableDummyService;
+	private TableService tableService;
 
 	private Table table;
 	private Player player1;
@@ -34,14 +34,13 @@ public class TableServiceTest2 {
 
 	@Before
 	public void init() {
-		table = new Table();
-		table.setTableID(TABLE_ID);
-		cardMasterService.fillStack(table.getDrawingStack());
-		player1 = new Player(PLAYER_ONE_ID, PLAYER_ONE_ACCOUNT_ID);
-		player2 = new Player(PLAYER_TWO_ID, PLAYER_TWO_ACCOUNT_ID);
-		table.getPlayers().add(player1);
-		table.getPlayers().add(player2);
-		table.setCurrentPlayer(player1.getPlayerId());
+        cardMasterService = new CardMasterServiceImpl();
+        tableDummyService = new TableDummyServiceImpl();
+        RuleSetService ruleSetService = new RuleSetServiceImpl();
+        tableService = new TableServiceImpl(ruleSetService, cardMasterService);
+		table = tableDummyService.getNewTableDummy();
+		player1 = tableDummyService.getPlayer1();
+		player2 = tableDummyService.getPlayer2();
 		tableService.getOpenTables().add(table);
 	}
 
@@ -53,6 +52,7 @@ public class TableServiceTest2 {
 	@Test
 	public void testIfPlayerPlayedLastCard() {
 		Card playCard = new Card(Suits.CLUBS.getSuit(), Ranks.EIGHT.getRank());
+		player1.getHand().clear();
 		player1.addCard(playCard);
 		table.getPlayingStack().getStack().add(new Card(Suits.CLUBS.getSuit(), Ranks.NINE.getRank()));
 
@@ -66,6 +66,7 @@ public class TableServiceTest2 {
 	@Test
 	public void testNoMauCall() {
 		Card playCard = new Card(Suits.CLUBS.getSuit(), Ranks.EIGHT.getRank());
+		player1.getHand().clear();
 		player1.addCard(playCard);
 		player1.addCard(new Card(Suits.HEARTS.getSuit(), Ranks.EIGHT.getRank()));
 		table.getPlayingStack().getStack().add(new Card(Suits.CLUBS.getSuit(), Ranks.NINE.getRank()));

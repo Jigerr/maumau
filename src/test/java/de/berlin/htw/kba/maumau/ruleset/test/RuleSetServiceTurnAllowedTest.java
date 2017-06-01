@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -17,12 +18,17 @@ import de.berlin.htw.kba.maumau.table.db.Card;
 @RunWith(Parameterized.class)
 public class RuleSetServiceTurnAllowedTest {
 
-	private RuleSetService ruleSet = new RuleSetServiceImpl();
+	private RuleSetService ruleSet;
 	
 	private Card currentCard;
 	private Card lastPlayedCard;
 	private Conditions condition;
 	private Boolean expectedResult;
+	
+	   @Before
+	    public void setUp() {
+	        ruleSet = new RuleSetServiceImpl();
+	    }   
 	
 	public RuleSetServiceTurnAllowedTest(Card currentCard, Card lastPlayedCard, Conditions condition, boolean expectedResult) {
 		this.currentCard = currentCard;

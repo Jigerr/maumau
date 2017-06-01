@@ -19,10 +19,10 @@ public class Table {
 	private Stack playingStack = new Stack();
 
 	/** The player. */
-	private LinkedList<Player> player = new LinkedList<>();
+	private LinkedList<Player> players = new LinkedList<>();
 
 	/** The current player. */
-	private String currentPlayer;
+	private Player currentPlayer;
 
 	/** The game direction clockwise. */
 	private Boolean gameDirectionClockwise = true;
@@ -102,7 +102,7 @@ public class Table {
 	 * @return the players
 	 */
 	public LinkedList<Player> getPlayers() {
-		return player;
+		return players;
 	}
 
 	/**
@@ -111,8 +111,8 @@ public class Table {
 	 * @param player
 	 *            the new player
 	 */
-	public void setPlayer(LinkedList<Player> player) {
-		this.player = player;
+	public void setPlayers(LinkedList<Player> player) {
+		this.players = player;
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class Table {
 	 *
 	 * @return the current player
 	 */
-	public String getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
@@ -130,7 +130,7 @@ public class Table {
 	 * @param currentPlayer
 	 *            the new current player
 	 */
-	public void setCurrentPlayer(String currentPlayer) {
+	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 

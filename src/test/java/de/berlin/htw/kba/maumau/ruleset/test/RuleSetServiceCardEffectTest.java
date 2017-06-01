@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -17,10 +18,15 @@ import de.berlin.htw.kba.maumau.table.db.Card;
 @RunWith(Parameterized.class)
 public class RuleSetServiceCardEffectTest {
 
-	private RuleSetService ruleSet = new RuleSetServiceImpl();
+	private RuleSetService ruleSet;
 
 	private Card currentCard;
 	private CardEffects expectedResult;
+	
+	@Before
+	public void setUp() {
+	    ruleSet = new RuleSetServiceImpl();
+	}	
 
 	public RuleSetServiceCardEffectTest(Card currentCard, CardEffects expectedResult) {
 		this.currentCard = currentCard;

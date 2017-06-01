@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
-import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
 import de.berlin.htw.kba.maumau.ruleset.service.CardEffects;
@@ -20,40 +18,30 @@ import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Table;
-import de.berlin.htw.kba.maumau.table.service.TableService;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TableServiceMockTest {
 
-	private static final String PLAYER_ONE_ID = "1";
-	private static final String PLAYER_TWO_ID = "2";
 	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
-	private static final String PLAYER_TWO_ACCOUNT_ID = "2";
 	private static final String TABLE_ID = "1";
 
-	private CardMasterService cardMasterService = new CardMasterServiceImpl();
+	private TableDummyService tableDummyService;
 
 	@Mock
 	private RuleSetService ruleSetService;
 
 	@InjectMocks
-	private TableService tableService = new TableServiceImpl();
+	private TableServiceImpl tableService;
 
 	private Table table;
 	private Player player1;
-	private Player player2;
 
 	@Before
-	public void init() {
-		table = new Table();
-		table.setTableID(TABLE_ID);
-		cardMasterService.fillStack(table.getDrawingStack());
-		player1 = new Player(PLAYER_ONE_ID, PLAYER_ONE_ACCOUNT_ID);
-		player2 = new Player(PLAYER_TWO_ID, PLAYER_TWO_ACCOUNT_ID);
-		table.getPlayers().add(player1);
-		table.getPlayers().add(player2);
-		table.setCurrentPlayer(player1.getPlayerId());
+	public void init() {	
+	    tableDummyService = new TableDummyServiceImpl();
+	    table = tableDummyService.getNewTableDummy();
+        player1 = tableDummyService.getPlayer1();
 		tableService.getOpenTables().add(table);
 	}
 

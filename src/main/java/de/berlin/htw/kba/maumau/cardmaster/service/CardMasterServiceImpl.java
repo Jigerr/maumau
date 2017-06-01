@@ -2,10 +2,13 @@ package de.berlin.htw.kba.maumau.cardmaster.service;
 
 import java.util.LinkedList;
 
+import org.springframework.stereotype.Service;
+
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
+@Service
 public class CardMasterServiceImpl implements CardMasterService {
 
 	public CardMasterServiceImpl() {

@@ -4,26 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.springframework.stereotype.Service;
+
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
-import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
-import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Table;
 
+@Service
 public class TableServiceImpl implements TableService {
 
 	private static final int PENALTY_DRAW = 2;
 
 	private static final int DEFAULT_DRAW = 1;
 
-	private RuleSetService ruleSetService = new RuleSetServiceImpl();
+	private RuleSetService ruleSetService;
 
-	private CardMasterService cardMasterService = new CardMasterServiceImpl();
+	private CardMasterService cardMasterService;
 
 	private List<Table> openTables = new ArrayList<Table>();
+	
+	public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService) {
+	    this.ruleSetService = ruleSetService;
+	    this.cardMasterService = cardMasterService;
+    }
 
 	@Override
 	public void drawCards(String tableId, String accountId) {
@@ -70,9 +76,9 @@ public class TableServiceImpl implements TableService {
 		int startIndex = table.getPlayers().indexOf(player) + 1;
 		ListIterator<Player> iter = table.getPlayers().listIterator(startIndex);
 		if (iter.hasNext()) {
-			table.setCurrentPlayer(iter.next().getPlayerId());
+			table.setCurrentPlayer(iter.next());
 		} else {
-			table.setCurrentPlayer(table.getPlayers().getFirst().getPlayerId());
+			table.setCurrentPlayer(table.getPlayers().getFirst());
 		}
 		player.setCalledMau(false);
 

@@ -1,8 +1,11 @@
 package de.berlin.htw.kba.maumau.ruleset.service;
 
+import org.springframework.stereotype.Service;
+
 import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.table.db.Card;
 
+@Service
 public class RuleSetServiceImpl implements RuleSetService {
 
 	@Override
