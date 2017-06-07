@@ -17,14 +17,14 @@ public class CardMasterServiceImpl implements CardMasterService {
 	@Override
 	public Stack fillStack(Stack stack) {
 
-		if (!stack.getStack().isEmpty()) {
+		if (!stack.getCardList().isEmpty()) {
 			stack = new Stack();
 		}
 
 		for (Suits suit : Suits.values()) {
 			for (Ranks rank : Ranks.values()) {
-				Card card = new Card(suit.getSuit(), rank.getRank());
-				stack.getStack().add(card);
+				Card card = new Card(suit.getSuit(), rank.getValue());
+				stack.getCardList().add(card);
 				// System.out.println("Card: " + card.getRank() + " of " +
 				// card.getSuit() + " added to Stack...");
 			}
@@ -37,13 +37,13 @@ public class CardMasterServiceImpl implements CardMasterService {
 
 		LinkedList<Card> temp = new LinkedList<>();
 
-		while (!stack.getStack().isEmpty()) {
-			int loc = (int) (Math.random() * stack.getStack().size());
-			temp.add(stack.getStack().get(loc));
-			stack.getStack().remove(loc);
+		while (!stack.getCardList().isEmpty()) {
+			int loc = (int) (Math.random() * stack.getCardList().size());
+			temp.add(stack.getCardList().get(loc));
+			stack.getCardList().remove(loc);
 		}
 
-		stack.setStack(temp);
+		stack.setCardList(temp);
 
 		return stack;
 	}
@@ -51,8 +51,8 @@ public class CardMasterServiceImpl implements CardMasterService {
 	@Override
 	public void fillHands(Player player, Stack drawingStack) {
 		for (int i = 0; i < 5; i++) {
-			player.addCard(drawingStack.getStack().getLast());
-			drawingStack.getStack().removeLast();
+			player.addCard(drawingStack.getCardList().get(drawingStack.getCardList().size()-1));
+			drawingStack.getCardList().remove(drawingStack.getCardList().size()-1);
 		}
 	}
 

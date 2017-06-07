@@ -2,8 +2,9 @@ package de.berlin.htw.kba.maumau.table.service;
 
 import java.util.List;
 
+import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
 import de.berlin.htw.kba.maumau.table.db.Card;
-import de.berlin.htw.kba.maumau.table.db.Table;
+import de.berlin.htw.kba.maumau.table.db.GameTable;
 
 /**
  * The Interface TableService.
@@ -13,34 +14,34 @@ public interface TableService {
 	/**
 	 * Draw cards.
 	 *
-	 * @param tableId
+	 * @param gameTableId
 	 *            the table id
 	 * @param accountId
 	 *            the account id
 	 */
-	void drawCards(String tableId, String accountId);
+	void drawCards(Integer gameTableId, String accountId);
 
 	/**
 	 * Play card.
 	 *
-	 * @param tableId
+	 * @param gameTableId
 	 *            the table id
 	 * @param accountId
 	 *            the account id
 	 * @param currentCard
 	 *            the current card
 	 */
-	void playCard(String tableId, String accountId, Card currentCard);
+	boolean playCard(Integer gameTableId, String accountId, Card currentCard, Suits wishedSuit);
 
 	/**
 	 * Call mau.
 	 *
-	 * @param tableId
+	 * @param gameTableId
 	 *            the table id
 	 * @param accountId
 	 *            the account id
 	 */
-	void callMau(String tableId, String accountId);
+	void callMau(Integer gameTableId, String accountId);
 
 	/**
 	 * Gets the open tables.
@@ -48,7 +49,7 @@ public interface TableService {
 	 * @return the open tables
 	 */
 	// temopräre Methoden
-	List<Table> getOpenTables();
+	List<GameTable> getOpenTables();
 
 	/**
 	 * Sets the open tables.
@@ -56,6 +57,10 @@ public interface TableService {
 	 * @param openTables
 	 *            the new open tables
 	 */
-	void setOpenTables(List<Table> openTables);
+	void setOpenTables(List<GameTable> openTables);
+
+	GameTable initTable();
+
+	void skipTurn(Integer gameTableId, String playerId);
 
 }

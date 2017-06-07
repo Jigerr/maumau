@@ -1,42 +1,74 @@
 package de.berlin.htw.kba.maumau.table.db;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
-import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 
 /**
  * The Class Table.
  */
-public class Table {
+@Entity
+@Table(name = "GAME_TABLE")
+public class GameTable {
 
 	/** The table ID. */
-	private String tableID;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "GAME_TABLE_ID")
+	private Integer gameTableID;
 
 	/** The drawing stack. */
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="DRAWING_STACK_ID")
 	private Stack drawingStack = new Stack();
 
 	/** The playing stack. */
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="PLAYING_STACK_ID")
 	private Stack playingStack = new Stack();
 
 	/** The player. */
-	private LinkedList<Player> players = new LinkedList<>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="GAME_TABLE_ID")
+	private List<Player> players = new ArrayList<Player>();
 
 	/** The current player. */
+	@OneToOne
+	@JoinColumn(name="CURRENT_PLAYER_ID")
 	private Player currentPlayer;
 
 	/** The game direction clockwise. */
+	@Column(name = "GAME_DIRECTION")
 	private Boolean gameDirectionClockwise = true;
 
 	/** The game over. */
+	@Column(name = "GAME_OVER")
 	private Boolean gameOver = false;
 
 	/** The condition. */
-	private Conditions condition = Conditions.NO_EFFECT;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "CONDITIONS")
+	private Condition condition = Condition.NO_EFFECT;
 
 	/**
 	 * Instantiates a new table.
 	 */
-	public Table() {
+	public GameTable() {
 	}
 
 	/**
@@ -44,8 +76,8 @@ public class Table {
 	 *
 	 * @return the table ID
 	 */
-	public String getTableID() {
-		return tableID;
+	public Integer getTableID() {
+		return gameTableID;
 	}
 
 	/**
@@ -54,8 +86,8 @@ public class Table {
 	 * @param tableID
 	 *            the new table ID
 	 */
-	public void setTableID(String tableID) {
-		this.tableID = tableID;
+	public void setTableID(Integer tableID) {
+		this.gameTableID = tableID;
 	}
 
 	/**
@@ -101,7 +133,7 @@ public class Table {
 	 *
 	 * @return the players
 	 */
-	public LinkedList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
@@ -111,7 +143,7 @@ public class Table {
 	 * @param player
 	 *            the new player
 	 */
-	public void setPlayers(LinkedList<Player> player) {
+	public void setPlayers(List<Player> player) {
 		this.players = player;
 	}
 
@@ -177,7 +209,7 @@ public class Table {
 	 *
 	 * @return the condition
 	 */
-	public Conditions getCondition() {
+	public Condition getCondition() {
 		return condition;
 	}
 
@@ -187,7 +219,7 @@ public class Table {
 	 * @param condition
 	 *            the new condition
 	 */
-	public void setCondition(Conditions condition) {
+	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
 }

@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
+import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
@@ -22,7 +22,7 @@ public class RuleSetServiceTurnAllowedTest {
 	
 	private Card currentCard;
 	private Card lastPlayedCard;
-	private Conditions condition;
+	private Condition condition;
 	private Boolean expectedResult;
 	
 	   @Before
@@ -30,7 +30,7 @@ public class RuleSetServiceTurnAllowedTest {
 	        ruleSet = new RuleSetServiceImpl();
 	    }   
 	
-	public RuleSetServiceTurnAllowedTest(Card currentCard, Card lastPlayedCard, Conditions condition, boolean expectedResult) {
+	public RuleSetServiceTurnAllowedTest(Card currentCard, Card lastPlayedCard, Condition condition, boolean expectedResult) {
 		this.currentCard = currentCard;
 		this.lastPlayedCard = lastPlayedCard;
 		this.condition = condition;
@@ -40,16 +40,16 @@ public class RuleSetServiceTurnAllowedTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] { 
-			{new Card("Hearts", "8"),new Card("Hearts", "9"),Conditions.NO_EFFECT, true},
-			{new Card("Hearts", "10"),new Card("Spades", "10"),Conditions.NO_EFFECT, true},
-			{new Card("Hearts", "Jack"),new Card("Spades", "9"),Conditions.NO_EFFECT, true}, 
-			{new Card("Diamonds", "8"),new Card("Hearts", "10"),Conditions.NO_EFFECT, false}, 
-			{new Card("Hearts", "7"),new Card("Spades", "7"),Conditions.PLUS_TWO, true}, 
-			{new Card("Hearts", "7"),new Card("Spades", "7"),Conditions.PLUS_FOUR, true}, 
-			{new Card("Spades", "8"),new Card("Spades", "7"),Conditions.PLUS_TWO, false}, 
-			{new Card("Clubs", "8"),new Card("Hearts", "Jack"),Conditions.WISH_CLUBS, true}, 
-			{new Card("Diamonds", "8"),new Card("Hearts", "Jack"),Conditions.WISH_CLUBS, false},
-			{new Card("Clubs", "Jack"),new Card("Hearts", "Jack"),Conditions.WISH_CLUBS, false},
+			{new Card("Hearts", "8"),new Card("Hearts", "9"),Condition.NO_EFFECT, true},
+			{new Card("Hearts", "10"),new Card("Spades", "10"),Condition.NO_EFFECT, true},
+			{new Card("Hearts", "Jack"),new Card("Spades", "9"),Condition.NO_EFFECT, true}, 
+			{new Card("Diamonds", "8"),new Card("Hearts", "10"),Condition.NO_EFFECT, false}, 
+			{new Card("Hearts", "7"),new Card("Spades", "7"),Condition.PLUS_TWO, true}, 
+			{new Card("Hearts", "7"),new Card("Spades", "7"),Condition.PLUS_FOUR, true}, 
+			{new Card("Spades", "8"),new Card("Spades", "7"),Condition.PLUS_TWO, false}, 
+			{new Card("Clubs", "8"),new Card("Hearts", "Jack"),Condition.WISH_CLUBS, true}, 
+			{new Card("Diamonds", "8"),new Card("Hearts", "Jack"),Condition.WISH_CLUBS, false},
+			{new Card("Clubs", "Jack"),new Card("Hearts", "Jack"),Condition.WISH_CLUBS, false},
 		});
 	}
 

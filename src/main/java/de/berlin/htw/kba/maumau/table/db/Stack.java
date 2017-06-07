@@ -1,14 +1,35 @@
 package de.berlin.htw.kba.maumau.table.db;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The Class Stack.
  */
+@Entity
+@Table(name = "STACK")
 public class Stack {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "ID")
+	private Integer Id;
+	
 	/** The stack. */
-	private LinkedList<Card> stack = new LinkedList<>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="STACK_ID")
+	private List<Card> cardList = new ArrayList<>();
 
 	/**
 	 * Instantiates a new stack.
@@ -17,13 +38,21 @@ public class Stack {
 
 	}
 
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
+
 	/**
 	 * Gets the stack.
 	 *
 	 * @return the stack
 	 */
-	public LinkedList<Card> getStack() {
-		return stack;
+	public List<Card> getCardList() {
+		return cardList;
 	}
 
 	/**
@@ -32,8 +61,8 @@ public class Stack {
 	 * @param deck
 	 *            the new stack
 	 */
-	public void setStack(LinkedList<Card> deck) {
-		this.stack = deck;
+	public void setCardList(List<Card> deck) {
+		this.cardList = deck;
 	}
 
 	/**
@@ -42,7 +71,7 @@ public class Stack {
 	 * @return the int
 	 */
 	public int amountOfCards() {
-		return stack.size();
+		return cardList.size();
 	}
 
 }

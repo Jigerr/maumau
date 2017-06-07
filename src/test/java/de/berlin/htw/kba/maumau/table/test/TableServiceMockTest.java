@@ -12,19 +12,19 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
-import de.berlin.htw.kba.maumau.ruleset.service.CardEffects;
-import de.berlin.htw.kba.maumau.ruleset.service.Conditions;
+import de.berlin.htw.kba.maumau.ruleset.service.CardEffect;
+import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
-import de.berlin.htw.kba.maumau.table.db.Table;
+import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TableServiceMockTest {
 
 	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
-	private static final String TABLE_ID = "1";
+	private static final Integer TABLE_ID = 1;
 
 	private TableDummyService tableDummyService;
 
@@ -34,15 +34,15 @@ public class TableServiceMockTest {
 	@InjectMocks
 	private TableServiceImpl tableService;
 
-	private Table table;
+	private GameTable gameTable;
 	private Player player1;
 
 	@Before
-	public void init() {	
-	    tableDummyService = new TableDummyServiceImpl();
-	    table = tableDummyService.getNewTableDummy();
-        player1 = tableDummyService.getPlayer1();
-		tableService.getOpenTables().add(table);
+	public void init() {
+		tableDummyService = new TableDummyServiceImpl();
+		gameTable = tableDummyService.getNewTableDummy();
+		player1 = tableDummyService.getPlayer1();
+		tableService.getOpenTables().add(gameTable);
 	}
 
 	@After
@@ -52,18 +52,19 @@ public class TableServiceMockTest {
 
 	@Test
 	public void testPlusSixCondition() {
-		Card playCard = new Card(Suits.HEARTS.getSuit(), Ranks.SEVEN.getRank());
+		Card playCard = new Card(Suits.HEARTS.getSuit(), Ranks.SEVEN.getValue());
 		player1.addCard(playCard);
-		table.getPlayingStack().getStack().add(new Card(Suits.CLUBS.getSuit(), Ranks.SEVEN.getRank()));
-		table.setCondition(Conditions.PLUS_FOUR);
+		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.SEVEN.getValue()));
+		gameTable.setCondition(Condition.PLUS_FOUR);
 
-		Mockito.when(ruleSetService.turnAllowed(playCard, table.getPlayingStack().getStack().getLast(),
-				Conditions.PLUS_FOUR)).thenReturn(true);
-		Mockito.when(ruleSetService.getCardEffect(playCard)).thenReturn(CardEffects.PLUS_TWO);
+		Mockito.when(ruleSetService.turnAllowed(playCard,
+				gameTable.getPlayingStack().getCardList().get(gameTable.getPlayingStack().getCardList().size() - 1),
+				Condition.PLUS_FOUR)).thenReturn(true);
+		Mockito.when(ruleSetService.getCardEffect(playCard)).thenReturn(CardEffect.PLUS_TWO);
 
-		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard);
+		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 
-		Assert.assertTrue(table.getCondition().equals(Conditions.PLUS_SIX));
+		Assert.assertTrue(gameTable.getCondition().equals(Condition.PLUS_SIX));
 	}
 
 }

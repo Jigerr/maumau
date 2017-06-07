@@ -28,26 +28,26 @@ public class CardMasterServiceTest {
 
 	@Test
 	public void testIfStackIsFilled() {
-		Assert.assertFalse(stack.getStack().isEmpty());
+		Assert.assertFalse(stack.getCardList().isEmpty());
 	}
 
 	@Test
 	public void testIfFilledWith32Cards() {
-		Assert.assertTrue(stack.getStack().size() == DECK_SIZE);
+		Assert.assertTrue(stack.getCardList().size() == DECK_SIZE);
 	}
 
 	@Test
 	public void testIfFilledWith32Cards2() {
 		cardMaster.fillStack(stack);
-		Assert.assertTrue(stack.getStack().size() == DECK_SIZE);
+		Assert.assertTrue(stack.getCardList().size() == DECK_SIZE);
 	}
 
 	@Test
 	public void testIfStackIsShuffeld() {
-		LinkedList<Card> originalStack = new LinkedList<Card>(stack.getStack());
+		LinkedList<Card> originalStack = new LinkedList<Card>(stack.getCardList());
 		// Assert.assertEquals(originalStack, stack.getStack());
 		cardMaster.shuffleStack(stack);
-		Assert.assertNotEquals(originalStack, stack.getStack());
+		Assert.assertNotEquals(originalStack, stack.getCardList());
 	}
 
 	@Test

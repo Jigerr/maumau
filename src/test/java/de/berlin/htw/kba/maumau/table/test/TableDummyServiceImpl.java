@@ -3,19 +3,19 @@ package de.berlin.htw.kba.maumau.table.test;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Player;
-import de.berlin.htw.kba.maumau.table.db.Table;
+import de.berlin.htw.kba.maumau.table.db.GameTable;
 
 public class TableDummyServiceImpl implements TableDummyService {
 
-    private Table tableDummy;
+    private GameTable tableDummy;
     private Player player1;
     private Player player2;
 
     private CardMasterService cardMasterService = new CardMasterServiceImpl();
 
     public TableDummyServiceImpl() {
-        tableDummy = new Table();
-        tableDummy.setTableID("1");
+        tableDummy = new GameTable();
+        tableDummy.setTableID(1);
         player1 = new Player("1", "1");
         player2 = new Player("2", "2");
         cardMasterService.fillStack(tableDummy.getDrawingStack());
@@ -25,11 +25,11 @@ public class TableDummyServiceImpl implements TableDummyService {
         tableDummy.getPlayers().add(player1);
         tableDummy.getPlayers().add(player2);
         tableDummy.setCurrentPlayer(player1);
-        tableDummy.getDrawingStack().getStack().removeLast();
+        tableDummy.getDrawingStack().getCardList().remove(tableDummy.getDrawingStack().getCardList().size()-1);
     }
 
     @Override
-    public Table getNewTableDummy() {
+    public GameTable getNewTableDummy() {
         return tableDummy;
     }
 

@@ -1,16 +1,34 @@
 package de.berlin.htw.kba.maumau.table.db;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * The Class Card.
  */
+@Entity
+@Table(name = "CARD")
 public class Card {
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "ID")
+	private Integer Id;
+	
 	/** The suit. */
+	@Column(name = "SUIT")
 	private String suit;
 
 	/** The rank. */
+	@Column(name = "RANK")
 	private String rank;
 
+	public Card() {
+	}
 	/**
 	 * Instantiates a new card.
 	 *
@@ -27,6 +45,18 @@ public class Card {
 	public Card(Card card) {
 		this.suit = card.getSuit();
 		this.rank = card.getRank();
+	}
+	
+	public String printCard() {
+		return rank + " of " + suit;
+	}
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
 	}
 
 	/**

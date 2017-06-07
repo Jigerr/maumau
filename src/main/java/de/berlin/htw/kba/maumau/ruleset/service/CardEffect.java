@@ -1,6 +1,6 @@
 package de.berlin.htw.kba.maumau.ruleset.service;
 
-public enum CardEffects {
+public enum CardEffect {
 	
 	NO_EFFECT,
 	SKIP,

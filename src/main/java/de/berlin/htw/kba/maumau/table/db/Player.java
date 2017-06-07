@@ -1,24 +1,50 @@
 package de.berlin.htw.kba.maumau.table.db;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The Class Player.
  */
+@Entity
+@Table(name = "PLAYER")
 public class Player {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "ID")
+	private Integer Id;
 
 	/** The current account. */
-	private String currentAccount;
+	@Column(name = "ACCOUNT_ID")
+	private String accountId;
 
 	/** The Player id. */
+	@Column(name = "TABLE_PLAYER_ID")
 	private String PlayerId;
 
 	/** The hand. */
-	private LinkedList<Card> hand = new LinkedList<>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="PLAYER_ID")
+	private List<Card> hand = new ArrayList<>();
 
 	/** The called mau. */
 	private boolean calledMau = false;
 
+	protected Player() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * Instantiates a new player.
 	 *
@@ -29,7 +55,7 @@ public class Player {
 	 */
 	public Player(String playerId, String accountId) {
 		this.PlayerId = playerId;
-		this.currentAccount = accountId;
+		this.accountId = accountId;
 	}
 
 	/**
@@ -37,7 +63,7 @@ public class Player {
 	 *
 	 * @return the hand
 	 */
-	public LinkedList<Card> getHand() {
+	public List<Card> getHand() {
 		return hand;
 	}
 
@@ -47,7 +73,7 @@ public class Player {
 	 * @param hand
 	 *            the new hand
 	 */
-	public void setHand(LinkedList<Card> hand) {
+	public void setHand(List<Card> hand) {
 		this.hand = hand;
 	}
 
@@ -67,7 +93,7 @@ public class Player {
 	 * @return the current account
 	 */
 	public String getCurrentAccount() {
-		return currentAccount;
+		return accountId;
 	}
 
 	/**
@@ -77,7 +103,7 @@ public class Player {
 	 *            the new current account
 	 */
 	public void setCurrentAccount(String accountId) {
-		this.currentAccount = accountId;
+		this.accountId = accountId;
 	}
 
 	/**
@@ -116,6 +142,14 @@ public class Player {
 	 */
 	public void setCalledMau(boolean calledMau) {
 		this.calledMau = calledMau;
+	}
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
 	}
 
 }

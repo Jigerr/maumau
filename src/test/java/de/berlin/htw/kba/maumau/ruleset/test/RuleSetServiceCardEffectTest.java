@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.berlin.htw.kba.maumau.ruleset.service.CardEffects;
+import de.berlin.htw.kba.maumau.ruleset.service.CardEffect;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
@@ -21,14 +21,14 @@ public class RuleSetServiceCardEffectTest {
 	private RuleSetService ruleSet;
 
 	private Card currentCard;
-	private CardEffects expectedResult;
+	private CardEffect expectedResult;
 	
 	@Before
 	public void setUp() {
 	    ruleSet = new RuleSetServiceImpl();
 	}	
 
-	public RuleSetServiceCardEffectTest(Card currentCard, CardEffects expectedResult) {
+	public RuleSetServiceCardEffectTest(Card currentCard, CardEffect expectedResult) {
 		this.currentCard = currentCard;
 		this.expectedResult = expectedResult;
 	}
@@ -36,13 +36,13 @@ public class RuleSetServiceCardEffectTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] { 
-			{new Card("Hearts", "8"), CardEffects.NO_EFFECT},
-			{new Card("Hearts", "Jack"), CardEffects.WISH},
-			{new Card("Diamonds", "Ace"), CardEffects.SKIP},
-			{new Card("Clubs", "7"), CardEffects.PLUS_TWO},
-			{new Card("Hearts", "7"), CardEffects.PLUS_TWO},
-			{new Card("Spades", "10"), CardEffects.NO_EFFECT},
-			{new Card("Clubs", "Jack"), CardEffects.WISH},
+			{new Card("Hearts", "8"), CardEffect.NO_EFFECT},
+			{new Card("Hearts", "Jack"), CardEffect.WISH},
+			{new Card("Diamonds", "Ace"), CardEffect.SKIP},
+			{new Card("Clubs", "7"), CardEffect.PLUS_TWO},
+			{new Card("Hearts", "7"), CardEffect.PLUS_TWO},
+			{new Card("Spades", "10"), CardEffect.NO_EFFECT},
+			{new Card("Clubs", "Jack"), CardEffect.WISH},
 		});
 	}
 	
@@ -50,7 +50,7 @@ public class RuleSetServiceCardEffectTest {
 	public void testGetCardEffect() {
 
 		// get 100% coverage
-		CardEffects.valueOf(CardEffects.NO_EFFECT.toString());
+		CardEffect.valueOf(CardEffect.NO_EFFECT.toString());
 
 		Assert.assertEquals(expectedResult, ruleSet.getCardEffect(currentCard));
 	}

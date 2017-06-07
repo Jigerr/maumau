@@ -14,7 +14,7 @@ public interface RuleSetService {
 	 *            the current card
 	 * @return the card effect
 	 */
-	CardEffects getCardEffect(Card currentCard);
+	CardEffect getCardEffect(Card currentCard);
 
 	/**
 	 * Turn allowed.
@@ -27,6 +27,6 @@ public interface RuleSetService {
 	 *            the condition
 	 * @return true, if successful
 	 */
-	boolean turnAllowed(Card currentCard, Card lastPlayedCard, Conditions condition);
+	boolean turnAllowed(Card currentCard, Card lastPlayedCard, Condition condition);
 
 }

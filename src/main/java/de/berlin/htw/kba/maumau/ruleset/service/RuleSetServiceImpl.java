@@ -9,7 +9,7 @@ import de.berlin.htw.kba.maumau.table.db.Card;
 public class RuleSetServiceImpl implements RuleSetService {
 
 	@Override
-	public boolean turnAllowed(Card currentCard, Card lastPlayedCard, Conditions condition) {
+	public boolean turnAllowed(Card currentCard, Card lastPlayedCard, Condition condition) {
 
 		switch (condition) {
 
@@ -38,20 +38,20 @@ public class RuleSetServiceImpl implements RuleSetService {
 		}
 	}
 
-	private boolean checkWishRule(Card currentCard, Conditions condition) {
-		return (currentCard.getSuit().equals(condition.getValue()));
+	private boolean checkWishRule(Card currentCard, Condition condition) {
+		return (currentCard.getSuit().equals(condition.getCondition()));
 	}
 
 	@Override
-	public CardEffects getCardEffect(Card currentCard) {
-		if (currentCard.getRank().equals(Ranks.SEVEN.getRank())) {
-			return CardEffects.PLUS_TWO;
-		} else if (currentCard.getRank().equals(Ranks.JACK.getRank())) {
-			return CardEffects.WISH;
-		} else if (currentCard.getRank().equals(Ranks.ACE.getRank())) {
-			return CardEffects.SKIP;
+	public CardEffect getCardEffect(Card currentCard) {
+		if (currentCard.getRank().equals(Ranks.SEVEN.getValue())) {
+			return CardEffect.PLUS_TWO;
+		} else if (currentCard.getRank().equals(Ranks.JACK.getValue())) {
+			return CardEffect.WISH;
+		} else if (currentCard.getRank().equals(Ranks.ACE.getValue())) {
+			return CardEffect.SKIP;
 		} else {
-			return CardEffects.NO_EFFECT;
+			return CardEffect.NO_EFFECT;
 		}
 	}
 

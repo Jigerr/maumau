@@ -1,6 +1,6 @@
 package de.berlin.htw.kba.maumau.ruleset.service;
 
-public enum Conditions {
+public enum Condition {
 
 	NO_EFFECT("NO_EFFECT"),
 	PLUS_TWO("2"),
@@ -15,11 +15,11 @@ public enum Conditions {
 	
 	private String condition;
 
-	Conditions(String condition) {
+	Condition(String condition) {
 		this.condition = condition;
 	}
 
-	public String getValue() {
+	public String getCondition() {
 		return condition;
 	}
 }
