@@ -21,6 +21,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 
@@ -55,8 +57,10 @@ public class GameTable {
 	private Stack playingStack = new Stack();
 
 	/** The player. */
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "GAME_TABLE_ID")
+	@OrderColumn
 	private List<Player> players = new ArrayList<Player>();
 
 	/** The current player. */

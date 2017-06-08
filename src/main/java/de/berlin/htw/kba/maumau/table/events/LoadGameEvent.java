@@ -6,15 +6,15 @@ import de.berlin.htw.kba.maumau.table.db.GameTable;
 
 public class LoadGameEvent extends ApplicationEvent {
 
-	private GameTable gameTable;
+	private Integer gameTableId;
 
-	public LoadGameEvent(Object source, GameTable gameTable) {
+	public LoadGameEvent(Object source, Integer gameTableId) {
 		super(source);
-		this.gameTable = gameTable;
+		this.gameTableId = gameTableId;
 	}
 
-	public GameTable getGameTable() {
-		return gameTable;
+	public Integer getGameTableId() {
+		return gameTableId;
 	}
 
 }

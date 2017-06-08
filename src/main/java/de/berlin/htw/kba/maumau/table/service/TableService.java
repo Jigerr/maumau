@@ -43,21 +43,6 @@ public interface TableService {
 	 */
 	void callMau(Integer gameTableId, String accountId);
 
-	/**
-	 * Gets the open tables.
-	 *
-	 * @return the open tables
-	 */
-	// temopräre Methoden
-	List<GameTable> getOpenTables();
-
-	/**
-	 * Sets the open tables.
-	 *
-	 * @param openTables
-	 *            the new open tables
-	 */
-	void setOpenTables(List<GameTable> openTables);
 
 	/**
 	 * Inits the table.

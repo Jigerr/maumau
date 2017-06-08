@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * The Class Player.
@@ -39,8 +41,10 @@ public class Player {
 	private String PlayerId;
 
 	/** The hand. */
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name="PLAYER_ID")
+	@OrderColumn
 	private List<Card> hand = new ArrayList<>();
 
 	/** The called mau. */

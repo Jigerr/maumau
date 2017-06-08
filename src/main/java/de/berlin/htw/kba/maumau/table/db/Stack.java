@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * The Class Stack.
@@ -31,8 +33,10 @@ public class Stack {
 	private Integer Id;
 	
 	/** The stack. */
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name="STACK_ID")
+	@OrderColumn
 	private List<Card> cardList = new ArrayList<>();
 
 	/**

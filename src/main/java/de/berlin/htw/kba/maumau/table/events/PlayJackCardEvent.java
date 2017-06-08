@@ -8,13 +8,13 @@ import de.berlin.htw.kba.maumau.table.db.GameTable;
 public class PlayJackCardEvent extends ApplicationEvent {
 
 	private Card card;
-	private GameTable gameTable;
+	private Integer gameTableId;
 	private String playerId;
 
-	public PlayJackCardEvent(Object source, Card card, GameTable gameTable, String playerId) {
+	public PlayJackCardEvent(Object source, Card card, Integer gameTableId, String playerId) {
 		super(source);
 		this.card = card;
-		this.gameTable = gameTable;
+		this.gameTableId = gameTableId;
 		this.playerId = playerId;
 	}
 	
@@ -22,8 +22,8 @@ public class PlayJackCardEvent extends ApplicationEvent {
 		return card;
 	}
 
-	public GameTable getGameTable() {
-		return gameTable;
+	public Integer getGameTableId() {
+		return gameTableId;
 	}
 
 	public String getPlayerId() {

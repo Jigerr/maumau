@@ -6,17 +6,17 @@ import de.berlin.htw.kba.maumau.table.db.GameTable;
 
 public class DrawCardEvent extends ApplicationEvent {
 	
-	private GameTable gameTable;
+	private Integer gameTableId;
 	private String playerId;
 
-	public DrawCardEvent(Object source, GameTable gameTable, String playerId) {
+	public DrawCardEvent(Object source, Integer gameTableId, String playerId) {
 		super(source);
-		this.gameTable = gameTable;
+		this.gameTableId = gameTableId;
 		this.playerId = playerId;
 	}
 
-	public GameTable getGameTable() {
-		return gameTable;
+	public Integer getGameTableId() {
+		return gameTableId;
 	}
 
 	public String getPlayerId() {

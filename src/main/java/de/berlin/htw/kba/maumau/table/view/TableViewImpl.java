@@ -83,7 +83,7 @@ public class TableViewImpl implements TableView {
 		while (true) {
 			String input = scanner.nextLine();
 			applicationEventPublisher
-					.publishEvent(new SkipTurnEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
+					.publishEvent(new SkipTurnEvent(this, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId()));
 			break;
 		}
 
@@ -108,9 +108,9 @@ public class TableViewImpl implements TableView {
 					Card c = gameTable.getCurrentPlayer().getHand().get(Integer.parseInt(input) - 1);
 					ApplicationEvent event;
 					if (c.getRank().equals(Ranks.JACK.getValue())) {
-						event = new PlayJackCardEvent(this, c, gameTable, gameTable.getCurrentPlayer().getPlayerId());
+						event = new PlayJackCardEvent(this, c, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId());
 					} else {
-						event = new PlayCardEvent(this, c, gameTable, gameTable.getCurrentPlayer().getPlayerId(), null);
+						event = new PlayCardEvent(this, c, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId(), null);
 					}
 					System.out.println("Playing card: " + c.printCard());
 					applicationEventPublisher.publishEvent(event);
@@ -120,12 +120,12 @@ public class TableViewImpl implements TableView {
 				if ("D".equals(input)) {
 					System.out.println("Drawing card!");
 					applicationEventPublisher.publishEvent(
-							new DrawCardEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
+							new DrawCardEvent(this, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId()));
 					break;
 				} else if ("C".equals(input)) {
 					System.out.println("Calling mau!");
 					applicationEventPublisher.publishEvent(
-							new CallMauEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
+							new CallMauEvent(this, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId()));
 				} else if ("L".equals(input)) {
 					System.out.println("Leaving game!");
 					applicationEventPublisher.publishEvent(new LeaveGameEvent(this));
@@ -171,7 +171,7 @@ public class TableViewImpl implements TableView {
 				if (isInteger(input)) {
 					if (isBetween(Integer.parseInt(input), 1, gameTablelist.size())) {
 						GameTable gameTable = gameTablelist.get(Integer.parseInt(input)-1);
-						applicationEventPublisher.publishEvent(new LoadGameEvent(this, gameTable));
+						applicationEventPublisher.publishEvent(new LoadGameEvent(this, gameTable.getGameTableID()));
 						break;
 					}
 				}
@@ -206,7 +206,7 @@ public class TableViewImpl implements TableView {
 				break;
 			}
 			if (wishedSuit != null) {
-				PlayCardEvent event = new PlayCardEvent(this, jackEvent.getCard(), jackEvent.getGameTable(),
+				PlayCardEvent event = new PlayCardEvent(this, jackEvent.getCard(), jackEvent.getGameTableId(),
 						jackEvent.getPlayerId(), wishedSuit);
 				applicationEventPublisher.publishEvent(event);
 				break;

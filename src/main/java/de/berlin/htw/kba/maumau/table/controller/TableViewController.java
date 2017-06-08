@@ -52,29 +52,29 @@ public class TableViewController {
 
 	@EventListener
 	private void handlePlayCardEvent(PlayCardEvent event) {
-		if (!tableService.playCard(event.getGameTable().getTableID(), event.getPlayerId(), event.getCard(),
+		if (!tableService.playCard(event.getGameTableId(), event.getPlayerId(), event.getCard(),
 				event.getWishedSuit())) {
 			tableView.printCardNotAllowedMessage();
 		}
-		doTurn(event.getGameTable());
+		doTurn(tableService.loadGame(event.getGameTableId()));
 	}
 
 	@EventListener
 	private void handleDrawCardEvent(DrawCardEvent event) {
-		tableService.drawCards(event.getGameTable().getTableID(), event.getPlayerId());
-		doTurn(event.getGameTable());
+		tableService.drawCards(event.getGameTableId(), event.getPlayerId());
+		doTurn(tableService.loadGame(event.getGameTableId()));
 	}
 
 	@EventListener
 	private void handleCallMauEvent(CallMauEvent event) {
-		tableService.callMau(event.getGameTable().getTableID(), event.getPlayerId());
-		doTurn(event.getGameTable());
+		tableService.callMau(event.getGameTableId(), event.getPlayerId());
+		doTurn(tableService.loadGame(event.getGameTableId()));
 	}
 
 	@EventListener
 	private void handleSkipTurnEvent(SkipTurnEvent event) {
-		tableService.skipTurn(event.getGameTable().getTableID(), event.getPlayerId());
-		doTurn(event.getGameTable());
+		tableService.skipTurn(event.getGameTableId(), event.getPlayerId());
+		doTurn(tableService.loadGame(event.getGameTableId()));
 	}
 	
 	@EventListener
@@ -84,7 +84,7 @@ public class TableViewController {
 	
 	@EventListener
 	private void handleLoadGameEvent(LoadGameEvent event) {
-		doTurn(tableService.loadGame(event.getGameTable().getGameTableID()));
+		doTurn(tableService.loadGame(event.getGameTableId()));
 	}
 	
 	@EventListener
@@ -95,7 +95,7 @@ public class TableViewController {
 	public void doTurn(GameTable gameTable) {
 		if (gameTable.getGameOver()) {
 			tableView.printGameOverMessage(gameTable);
-			tableService.getOpenTables().remove(gameTable);
+//			tableService.getOpenTables().remove(gameTable);
 			tableService.removeGameTable(gameTable);
 			initGame();
 		} else if (gameTable.getCondition().equals(Condition.SKIP)) {
