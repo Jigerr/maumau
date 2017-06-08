@@ -9,6 +9,9 @@ import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.events.CallMauEvent;
 import de.berlin.htw.kba.maumau.table.events.DrawCardEvent;
+import de.berlin.htw.kba.maumau.table.events.LeaveGameEvent;
+import de.berlin.htw.kba.maumau.table.events.LoadGameEvent;
+import de.berlin.htw.kba.maumau.table.events.LoadGameListEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayCardEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayJackCardEvent;
 import de.berlin.htw.kba.maumau.table.events.SkipTurnEvent;
@@ -73,11 +76,27 @@ public class TableViewController {
 		tableService.skipTurn(event.getGameTable().getTableID(), event.getPlayerId());
 		doTurn(event.getGameTable());
 	}
+	
+	@EventListener
+	private void handleLoadGameListEvent(LoadGameListEvent event) {
+		tableView.printGameListMessage(tableService.loadGameList());
+	}
+	
+	@EventListener
+	private void handleLoadGameEvent(LoadGameEvent event) {
+		doTurn(tableService.loadGame(event.getGameTable().getGameTableID()));
+	}
+	
+	@EventListener
+	private void handleLeaveGameEvent(LeaveGameEvent event) {
+		initGame();
+	}
 
 	public void doTurn(GameTable gameTable) {
 		if (gameTable.getGameOver()) {
 			tableView.printGameOverMessage(gameTable);
 			tableService.getOpenTables().remove(gameTable);
+			tableService.removeGameTable(gameTable);
 			initGame();
 		} else if (gameTable.getCondition().equals(Condition.SKIP)) {
 			tableView.printSkipMessage(gameTable);

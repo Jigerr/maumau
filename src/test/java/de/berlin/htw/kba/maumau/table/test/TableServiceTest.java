@@ -11,6 +11,7 @@ import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Player;
+import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.service.TableService;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
@@ -23,6 +24,7 @@ public class TableServiceTest {
     private CardMasterService cardMasterService;    
     private TableDummyService tableDummyService;
     private TableService tableService;
+    private TableRepository repository;
     
     private GameTable gameTable;
     private Player player1;
@@ -33,7 +35,8 @@ public class TableServiceTest {
         cardMasterService = new CardMasterServiceImpl();
         tableDummyService = new TableDummyServiceImpl();
         RuleSetService ruleSetService = Mockito.mock(RuleSetService.class);
-        tableService = new TableServiceImpl(ruleSetService, cardMasterService);  
+        repository = Mockito.mock(TableRepository.class);
+        tableService = new TableServiceImpl(ruleSetService, cardMasterService, repository);  
         gameTable = tableDummyService.getNewTableDummy();
         player1 = tableDummyService.getPlayer1();
         player2 = tableDummyService.getPlayer2();

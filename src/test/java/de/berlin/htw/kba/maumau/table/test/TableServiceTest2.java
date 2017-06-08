@@ -4,6 +4,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
@@ -13,11 +18,13 @@ import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
-import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
+import de.berlin.htw.kba.maumau.table.db.Player;
+import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.service.TableService;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TableServiceTest2 {
 
 	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
@@ -25,8 +32,9 @@ public class TableServiceTest2 {
 	private static final Integer TABLE_ID = 1;
 
 	private CardMasterService cardMasterService;
-	private TableDummyService tableDummyService;
+	private TableDummyService tableDummyService;		
 	private TableService tableService;
+	TableRepository repository;
 
 	private GameTable gameTable;
 	private Player player1;
@@ -37,11 +45,12 @@ public class TableServiceTest2 {
 		cardMasterService = new CardMasterServiceImpl();
 		tableDummyService = new TableDummyServiceImpl();
 		RuleSetService ruleSetService = new RuleSetServiceImpl();
-		tableService = new TableServiceImpl(ruleSetService, cardMasterService);
+		repository = Mockito.mock(TableRepository.class);
+		tableService = new TableServiceImpl(ruleSetService, cardMasterService, repository);
 		gameTable = tableDummyService.getNewTableDummy();
 		player1 = tableDummyService.getPlayer1();
 		player2 = tableDummyService.getPlayer2();
-		tableService.getOpenTables().add(gameTable);
+		tableService.getOpenTables().add(gameTable);		
 	}
 
 	@After
@@ -55,6 +64,7 @@ public class TableServiceTest2 {
 		player1.getHand().clear();
 		player1.addCard(playCard);
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.NINE.getValue()));
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
 
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 
@@ -71,7 +81,8 @@ public class TableServiceTest2 {
 		player1.addCard(playCard);
 		player1.addCard(new Card(Suits.HEARTS.getSuit(), Ranks.EIGHT.getValue()));
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.NINE.getValue()));
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 
 		Assert.assertTrue(player1.getHand().size() == 3);
@@ -83,7 +94,8 @@ public class TableServiceTest2 {
 		player1.addCard(playCard);
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.SEVEN.getValue()));
 		gameTable.setCondition(Condition.PLUS_TWO);
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 
 		Assert.assertTrue(gameTable.getCondition().equals(Condition.PLUS_FOUR));
@@ -95,7 +107,8 @@ public class TableServiceTest2 {
 		player2.addCard(playCard);
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.HEARTS.getSuit(), Ranks.JACK.getValue()));
 		gameTable.setCondition(Condition.WISH_CLUBS);
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.playCard(TABLE_ID, PLAYER_TWO_ACCOUNT_ID, playCard, null);
 
 		Assert.assertTrue(gameTable.getCondition().equals(Condition.PLUS_TWO));
@@ -108,7 +121,8 @@ public class TableServiceTest2 {
 		Card playCard = new Card(Suits.HEARTS.getSuit(), Ranks.ACE.getValue());
 		player1.addCard(playCard);
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.ACE.getValue()));
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 
 		Assert.assertTrue(gameTable.getCondition().equals(Condition.SKIP));
@@ -119,7 +133,8 @@ public class TableServiceTest2 {
 		Card playCard = new Card(Suits.HEARTS.getSuit(), Ranks.JACK.getValue());
 		player1.addCard(playCard);
 		gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.TEN.getValue()));
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, Suits.CLUBS);
 
 		Assert.assertTrue(gameTable.getCondition().equals(Condition.WISH_CLUBS));
@@ -130,7 +145,8 @@ public class TableServiceTest2 {
 		gameTable.getDrawingStack().getCardList().clear();
 		cardMasterService.fillStack(gameTable.getPlayingStack());
 		Card topCard = new Card(gameTable.getPlayingStack().getCardList().get(gameTable.getPlayingStack().getCardList().size()-1));
-
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
+		
 		tableService.drawCards(TABLE_ID, PLAYER_ONE_ACCOUNT_ID);
 
 		Assert.assertEquals("Rank doesnt match", gameTable.getPlayingStack().getCardList().get(gameTable.getPlayingStack().getCardList().size()-1).getRank(),

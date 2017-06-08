@@ -1,8 +1,11 @@
 package de.berlin.htw.kba.maumau.table.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +32,12 @@ public class TableServiceImpl implements TableService {
 
 	private List<GameTable> openTables = new ArrayList<GameTable>();
 
-	@Autowired
 	private TableRepository repository;
 
-	public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService) {
+	public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService, TableRepository repository) {
 		this.ruleSetService = ruleSetService;
 		this.cardMasterService = cardMasterService;
+		this.repository = repository;
 	}
 
 	@Override
@@ -192,6 +195,7 @@ public class TableServiceImpl implements TableService {
 		GameTable gameTable = new GameTable();
 		Player player1 = new Player("1", "1");
 		Player player2 = new Player("2", "2");
+		gameTable.setCreated(new Date());
 		cardMasterService.fillStack(gameTable.getDrawingStack());
 		cardMasterService.shuffleStack(gameTable.getDrawingStack());
 		cardMasterService.fillHands(player1, gameTable.getDrawingStack());
@@ -216,6 +220,22 @@ public class TableServiceImpl implements TableService {
 		Player player = getPlayer(playerId, gameTable);
 		endTurn(gameTable, player);
 		gameTable.setCondition(Condition.NO_EFFECT);
+	}
+	
+	@Override
+	public void removeGameTable(GameTable gameTable) {
+		repository.delete(gameTable);
+	}
+	
+	@Override
+	public List<GameTable> loadGameList() {
+		return repository.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public GameTable loadGame(Integer gameTableId) {
+		return repository.findOne(gameTableId);
 	}
 
 	@Override

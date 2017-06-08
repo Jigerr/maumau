@@ -1,6 +1,7 @@
 package de.berlin.htw.kba.maumau.table.db;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,10 +16,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Table.
  */
@@ -26,30 +32,36 @@ import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 @Table(name = "GAME_TABLE")
 public class GameTable {
 
+	/**
+	 * Instantiates a new table.
+	 */
+	public GameTable() {
+	}
+
 	/** The table ID. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "GAME_TABLE_ID")
 	private Integer gameTableID;
 
 	/** The drawing stack. */
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="DRAWING_STACK_ID")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "DRAWING_STACK_ID")
 	private Stack drawingStack = new Stack();
 
 	/** The playing stack. */
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="PLAYING_STACK_ID")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PLAYING_STACK_ID")
 	private Stack playingStack = new Stack();
 
 	/** The player. */
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn(name="GAME_TABLE_ID")
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name = "GAME_TABLE_ID")
 	private List<Player> players = new ArrayList<Player>();
 
 	/** The current player. */
 	@OneToOne
-	@JoinColumn(name="CURRENT_PLAYER_ID")
+	@JoinColumn(name = "CURRENT_PLAYER_ID")
 	private Player currentPlayer;
 
 	/** The game direction clockwise. */
@@ -65,10 +77,44 @@ public class GameTable {
 	@Column(name = "CONDITIONS")
 	private Condition condition = Condition.NO_EFFECT;
 
+	/** The created. */
+	@Column(name = "CREATED")
+	private Date created;
+
 	/**
-	 * Instantiates a new table.
+	 * Gets the game table ID.
+	 *
+	 * @return the game table ID
 	 */
-	public GameTable() {
+	public Integer getGameTableID() {
+		return gameTableID;
+	}
+
+	/**
+	 * Sets the game table ID.
+	 *
+	 * @param gameTableID the new game table ID
+	 */
+	public void setGameTableID(Integer gameTableID) {
+		this.gameTableID = gameTableID;
+	}
+
+	/**
+	 * Gets the created.
+	 *
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
+
+	/**
+	 * Sets the created.
+	 *
+	 * @param created the new created
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 	/**

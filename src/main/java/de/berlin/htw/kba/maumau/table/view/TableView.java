@@ -1,5 +1,7 @@
 package de.berlin.htw.kba.maumau.table.view;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationEventPublisher;
 
 import de.berlin.htw.kba.maumau.table.db.GameTable;
@@ -22,5 +24,7 @@ public interface TableView {
 	void printGameOverMessage(GameTable gameTable);
 
 	void printWishSuitMessage(PlayJackCardEvent event);
+
+	void printGameListMessage(List<GameTable> gameTablelist);
 
 }

@@ -1,5 +1,6 @@
 package de.berlin.htw.kba.maumau.table.view;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -13,6 +14,9 @@ import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.events.CallMauEvent;
 import de.berlin.htw.kba.maumau.table.events.DrawCardEvent;
+import de.berlin.htw.kba.maumau.table.events.LeaveGameEvent;
+import de.berlin.htw.kba.maumau.table.events.LoadGameEvent;
+import de.berlin.htw.kba.maumau.table.events.LoadGameListEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayCardEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayJackCardEvent;
 import de.berlin.htw.kba.maumau.table.events.SkipTurnEvent;
@@ -35,11 +39,12 @@ public class TableViewImpl implements TableView {
 				System.exit(0);
 			} else if ("N".equals(input)) {
 				System.out.println("Starting New Game!");
-				StartGameEvent event = new StartGameEvent(this);
-				applicationEventPublisher.publishEvent(event);
+				applicationEventPublisher.publishEvent(new StartGameEvent(this));
 				break;
 			} else if ("L".equals(input)) {
-				System.out.println("Loading Game!");
+				System.out.println("Start to load all games!");
+				applicationEventPublisher.publishEvent(new LoadGameListEvent(this));
+				break;
 			}
 		}
 	}
@@ -77,8 +82,8 @@ public class TableViewImpl implements TableView {
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			String input = scanner.nextLine();
-			applicationEventPublisher.publishEvent(
-					new SkipTurnEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
+			applicationEventPublisher
+					.publishEvent(new SkipTurnEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
 			break;
 		}
 
@@ -95,6 +100,7 @@ public class TableViewImpl implements TableView {
 			System.out.println("# Play a card by typing its number");
 			System.out.println("# (D) Draw card");
 			System.out.println("# (C) Call mau");
+			System.out.println("# (L) Leave game and back to menu");
 			String input = scanner.nextLine();
 
 			if (isInteger(input)) {
@@ -102,11 +108,9 @@ public class TableViewImpl implements TableView {
 					Card c = gameTable.getCurrentPlayer().getHand().get(Integer.parseInt(input) - 1);
 					ApplicationEvent event;
 					if (c.getRank().equals(Ranks.JACK.getValue())) {
-						event = new PlayJackCardEvent(this, c, gameTable,
-								gameTable.getCurrentPlayer().getPlayerId());
+						event = new PlayJackCardEvent(this, c, gameTable, gameTable.getCurrentPlayer().getPlayerId());
 					} else {
-						event = new PlayCardEvent(this, c, gameTable,
-								gameTable.getCurrentPlayer().getPlayerId(), null);
+						event = new PlayCardEvent(this, c, gameTable, gameTable.getCurrentPlayer().getPlayerId(), null);
 					}
 					System.out.println("Playing card: " + c.printCard());
 					applicationEventPublisher.publishEvent(event);
@@ -115,13 +119,16 @@ public class TableViewImpl implements TableView {
 			} else {
 				if ("D".equals(input)) {
 					System.out.println("Drawing card!");
-					applicationEventPublisher.publishEvent(new DrawCardEvent(this, gameTable,
-							gameTable.getCurrentPlayer().getPlayerId()));
+					applicationEventPublisher.publishEvent(
+							new DrawCardEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
 					break;
 				} else if ("C".equals(input)) {
 					System.out.println("Calling mau!");
 					applicationEventPublisher.publishEvent(
 							new CallMauEvent(this, gameTable, gameTable.getCurrentPlayer().getPlayerId()));
+				} else if ("L".equals(input)) {
+					System.out.println("Leaving game!");
+					applicationEventPublisher.publishEvent(new LeaveGameEvent(this));
 				}
 			}
 		}
@@ -141,6 +148,35 @@ public class TableViewImpl implements TableView {
 	@Override
 	public void printGameOverMessage(GameTable gameTable) {
 		System.out.println("Game is over.");
+	}
+
+	@Override
+	public void printGameListMessage(List<GameTable> gameTablelist) {
+		int counter = 1;
+		if (gameTablelist.isEmpty()) {
+			System.out.println("\n");
+			System.out.println("No games found. Returning to menu.");
+			initGame();
+		} else {
+			System.out.println("\n Listing all found games: \n");
+			for (GameTable table : gameTablelist) {
+				System.out.println("(" + counter + ") " + "Gametable ID: " + table.getGameTableID() + ", Created on: "
+						+ table.getCreated());
+				counter++;
+			}
+			Scanner scanner = new Scanner(System.in);
+			while (true) {
+				System.out.println("Please choose a game to load by typing its number.");
+				String input = scanner.nextLine();
+				if (isInteger(input)) {
+					if (isBetween(Integer.parseInt(input), 1, gameTablelist.size())) {
+						GameTable gameTable = gameTablelist.get(Integer.parseInt(input)-1);
+						applicationEventPublisher.publishEvent(new LoadGameEvent(this, gameTable));
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	@Override

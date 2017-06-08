@@ -17,6 +17,7 @@ import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Player;
+import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
@@ -30,6 +31,9 @@ public class TableServiceMockTest {
 
 	@Mock
 	private RuleSetService ruleSetService;
+	
+	@Mock
+	private TableRepository repository;
 
 	@InjectMocks
 	private TableServiceImpl tableService;
@@ -61,6 +65,7 @@ public class TableServiceMockTest {
 				gameTable.getPlayingStack().getCardList().get(gameTable.getPlayingStack().getCardList().size() - 1),
 				Condition.PLUS_FOUR)).thenReturn(true);
 		Mockito.when(ruleSetService.getCardEffect(playCard)).thenReturn(CardEffect.PLUS_TWO);
+		Mockito.when(repository.save(gameTable)).thenReturn(null);
 
 		tableService.playCard(TABLE_ID, PLAYER_ONE_ACCOUNT_ID, playCard, null);
 

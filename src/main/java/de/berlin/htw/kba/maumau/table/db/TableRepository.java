@@ -7,6 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface TableRepository extends JpaRepository<GameTable, String> {
+public interface TableRepository extends JpaRepository<GameTable, Integer> {
 
 }
