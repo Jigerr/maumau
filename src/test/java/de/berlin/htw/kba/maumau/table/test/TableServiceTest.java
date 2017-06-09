@@ -40,13 +40,9 @@ public class TableServiceTest {
         gameTable = tableDummyService.getNewTableDummy();
         player1 = tableDummyService.getPlayer1();
         player2 = tableDummyService.getPlayer2();
-        tableService.getOpenTables().add(gameTable);
+        Mockito.when(repository.findOne(gameTable.getGameTableID())).thenReturn(gameTable);
     }
 
-    @After
-    public void tearDown() {
-        tableService.getOpenTables().clear();
-    }
 
     @Test
     public void testIfPlayerDrewOneCard() {
