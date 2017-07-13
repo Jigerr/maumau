@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
     
-    @Query(value = "select table_player_id from player where game_table_id = ?1", nativeQuery = true)
+    @Query(value = "select * from player where game_table_id = ?1", nativeQuery = true)
     List<Player> findByGameTableId(Integer gameTableId);
 
 }
