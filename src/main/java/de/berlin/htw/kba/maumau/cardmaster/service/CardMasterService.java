@@ -1,6 +1,6 @@
 package de.berlin.htw.kba.maumau.cardmaster.service;
 
-import de.berlin.htw.kba.maumau.table.db.Player;
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
 /**

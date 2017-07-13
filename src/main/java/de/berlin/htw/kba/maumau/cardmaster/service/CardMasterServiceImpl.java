@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import org.springframework.stereotype.Service;
 
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Card;
-import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
 @Service

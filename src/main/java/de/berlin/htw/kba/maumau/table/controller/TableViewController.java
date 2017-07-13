@@ -99,7 +99,16 @@ public class TableViewController {
 
     @EventListener
     private void handleLoadGameEvent(LoadGameEvent event) {
-        //        doTurn(tableService.loadGame(event.getGameTableId()));
+        GameTable gameTable = tableService.loadGame(event.getGameTableId());
+        String playerId = tableService.getFreeSLot(gameTable.getGameTableID());
+        if(playerId == null) {
+            System.out.println("Geht net");
+        } else {
+            ClientUser clientUser = new ClientUser(gameTable.getGameTableID(), playerId);
+            pollingService.setClientUser(clientUser);
+            pollingService.setStartPolling(true);
+        }
+        
     }
 
     @EventListener

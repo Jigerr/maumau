@@ -1,4 +1,4 @@
-package de.berlin.htw.kba.maumau.table.db;
+package de.berlin.htw.kba.maumau.player.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
+import de.berlin.htw.kba.maumau.table.db.Card;
 
 // TODO: Auto-generated Javadoc
 /**

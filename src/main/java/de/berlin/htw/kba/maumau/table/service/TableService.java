@@ -81,4 +81,6 @@ public interface TableService {
 	 */
 	GameTable loadGame(Integer gameTableId);
 
+    String getFreeSLot(Integer gameTableId);
+
 }

@@ -2,7 +2,7 @@ package de.berlin.htw.kba.maumau.table.test;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterServiceImpl;
-import de.berlin.htw.kba.maumau.table.db.Player;
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 
 public class TableDummyServiceImpl implements TableDummyService {

@@ -24,6 +24,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 
 // TODO: Auto-generated Javadoc

@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
 import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
+import de.berlin.htw.kba.maumau.player.db.Player;
+import de.berlin.htw.kba.maumau.player.db.PlayerRepository;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
-import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.TableRepository;
 
 @Service
@@ -33,11 +34,15 @@ public class TableServiceImpl implements TableService {
     //	private List<GameTable> openTables = new ArrayList<GameTable>();
 
     private TableRepository repository;
+    
+    private PlayerRepository playerRepository;
+    
 
-    public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService, TableRepository repository) {
+    public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService, TableRepository repository, PlayerRepository playerRepository) {
         this.ruleSetService = ruleSetService;
         this.cardMasterService = cardMasterService;
         this.repository = repository;
+        this.playerRepository = playerRepository;
     }
 
     @Override
@@ -247,6 +252,20 @@ public class TableServiceImpl implements TableService {
     @Transactional
     public GameTable loadGame(Integer gameTableId) {
         return repository.findOne(gameTableId);
+    }
+    
+    @Override
+    @Transactional
+    public String getFreeSLot(Integer gameTableId) {        
+        List<Player> playerList = playerRepository.findByGameTableId(gameTableId);
+        String playerId = null;
+        for(Player player : playerList) {
+            if(player.getControlledBy() == null) {
+                playerId = player.getPlayerId();
+                break;
+            }
+        }        
+        return playerId;
     }
 
 }

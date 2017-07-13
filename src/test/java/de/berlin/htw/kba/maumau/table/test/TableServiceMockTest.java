@@ -12,11 +12,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.Ranks;
 import de.berlin.htw.kba.maumau.cardmaster.service.Suits;
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.ruleset.service.CardEffect;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.table.db.Card;
-import de.berlin.htw.kba.maumau.table.db.Player;
 import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
