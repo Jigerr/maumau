@@ -27,4 +27,6 @@ public interface TableView {
 
 	void printGameListMessage(List<GameTable> gameTablelist);
 
+    void printAmountOfPlayersMessage();
+
 }

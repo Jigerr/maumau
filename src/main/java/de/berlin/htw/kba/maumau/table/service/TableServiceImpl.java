@@ -1,13 +1,11 @@
 package de.berlin.htw.kba.maumau.table.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService;
@@ -25,6 +23,8 @@ public class TableServiceImpl implements TableService {
     private static final int PENALTY_DRAW = 2;
 
     private static final int DEFAULT_DRAW = 1;
+    
+    private static final String HUMAN = "human";
 
     private RuleSetService ruleSetService;
 
@@ -41,10 +41,10 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public void drawCards(Integer gameTableId, String accountId) {
+    public void drawCards(Integer gameTableId, String playerId) {
         //		GameTable gameTable = getTable(gameTableId);
         GameTable gameTable = loadGame(gameTableId);
-        Player player = getPlayer(accountId, gameTable);
+        Player player = getPlayer(playerId, gameTable);
 
         switch (gameTable.getCondition()) {
             case PLUS_TWO:
@@ -62,10 +62,10 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public boolean playCard(Integer gameTableId, String accountId, Card currentCard, Suits wishedSuit) {
+    public boolean playCard(Integer gameTableId, String playerId, Card currentCard, Suits wishedSuit) {
         //		GameTable gameTable = getTable(gameTableId);
         GameTable gameTable = loadGame(gameTableId);
-        Player player = getPlayer(accountId, gameTable);
+        Player player = getPlayer(playerId, gameTable);
         Card card = getCard(currentCard, player);
         boolean cardPlayed = false;
         if (ruleSetService.turnAllowed(card,
@@ -92,9 +92,9 @@ public class TableServiceImpl implements TableService {
 
     @Override
     @Transactional
-    public void callMau(Integer gameTableId, String accountId) {
+    public void callMau(Integer gameTableId, String playerId) {
         GameTable gameTable = loadGame(gameTableId);
-        Player player = getPlayer(accountId, gameTable);
+        Player player = getPlayer(playerId, gameTable);
         player.setCalledMau(true);
         repository.save(gameTable);
     }
@@ -112,9 +112,9 @@ public class TableServiceImpl implements TableService {
         repository.save(gameTable);
     }
 
-    private Player getPlayer(String accountId, GameTable gameTable) {
+    private Player getPlayer(String playerId, GameTable gameTable) {
         for (Player player : gameTable.getPlayers()) {
-            if (player.getCurrentAccount().equals(accountId)) {
+            if (player.getPlayerId().equals(playerId)) {
                 return player;
             }
         }
@@ -197,18 +197,21 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public GameTable initTable() {
+    public GameTable initTable(String playerAmount) {
         GameTable gameTable = new GameTable();
-        Player player1 = new Player("1", "1");
-        Player player2 = new Player("2", "2");
         gameTable.setCreated(new Date());
         cardMasterService.fillStack(gameTable.getDrawingStack());
         cardMasterService.shuffleStack(gameTable.getDrawingStack());
-        cardMasterService.fillHands(player1, gameTable.getDrawingStack());
-        cardMasterService.fillHands(player2, gameTable.getDrawingStack());
-        gameTable.getPlayers().add(player1);
-        gameTable.getPlayers().add(player2);
-        gameTable.setCurrentPlayer(player1);
+        
+        for (int i = 1; i <= Integer.parseInt(playerAmount); i++) {
+            Player player = new Player(String.valueOf(i));
+            cardMasterService.fillHands(player, gameTable.getDrawingStack());
+            gameTable.getPlayers().add(player);
+            if (i == 1) {
+                player.setControlledBy(HUMAN);
+                gameTable.setCurrentPlayer(player);
+            }
+        }
         gameTable.getPlayingStack().getCardList().add(
                 gameTable.getDrawingStack().getCardList().get(gameTable.getDrawingStack().getCardList().size() - 1));
         gameTable.getDrawingStack().getCardList().remove(gameTable.getDrawingStack().getCardList().size() - 1);

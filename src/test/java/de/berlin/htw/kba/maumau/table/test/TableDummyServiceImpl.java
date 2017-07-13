@@ -15,9 +15,9 @@ public class TableDummyServiceImpl implements TableDummyService {
 
     public TableDummyServiceImpl() {
         tableDummy = new GameTable();
-        tableDummy.setTableID(1);
-        player1 = new Player("1", "1");
-        player2 = new Player("2", "2");
+        tableDummy.setGameTableID(1);
+        player1 = new Player("1");
+        player2 = new Player("2");
         cardMasterService.fillStack(tableDummy.getDrawingStack());
         cardMasterService.shuffleStack(tableDummy.getDrawingStack());
         cardMasterService.fillHands(player1, tableDummy.getDrawingStack());

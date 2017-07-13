@@ -20,6 +20,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Player.
  */
@@ -27,14 +28,15 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "PLAYER")
 public class Player {
 	
+	/** The Id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "ID")
 	private Integer Id;
 
-	/** The current account. */
-	@Column(name = "ACCOUNT_ID")
-	private String accountId;
+	/** The controlled by. */
+	@Column(name = "CONTROLLED_BY")
+	private String controlledBy;
 
 	/** The Player id. */
 	@Column(name = "TABLE_PLAYER_ID")
@@ -50,20 +52,20 @@ public class Player {
 	/** The called mau. */
 	private boolean calledMau = false;
 
+	/**
+	 * Instantiates a new player.
+	 */
 	protected Player() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	/**
 	 * Instantiates a new player.
 	 *
-	 * @param playerId
-	 *            the player id
-	 * @param accountId
-	 *            the account id
+	 * @param playerId            the player id
 	 */
-	public Player(String playerId, String accountId) {
+	public Player(String playerId) {
 		this.PlayerId = playerId;
-		this.accountId = accountId;
 	}
 
 	/**
@@ -96,25 +98,6 @@ public class Player {
 	}
 
 	/**
-	 * Gets the current account.
-	 *
-	 * @return the current account
-	 */
-	public String getCurrentAccount() {
-		return accountId;
-	}
-
-	/**
-	 * Sets the current account.
-	 *
-	 * @param accountId
-	 *            the new current account
-	 */
-	public void setCurrentAccount(String accountId) {
-		this.accountId = accountId;
-	}
-
-	/**
 	 * Gets the player id.
 	 *
 	 * @return the player id
@@ -134,6 +117,24 @@ public class Player {
 	}
 
 	/**
+	 * Gets the controlled by.
+	 *
+	 * @return the controlled by
+	 */
+	public String getControlledBy() {
+        return controlledBy;
+    }
+
+    /**
+     * Sets the controlled by.
+     *
+     * @param controlledBy the new controlled by
+     */
+    public void setControlledBy(String controlledBy) {
+        this.controlledBy = controlledBy;
+    }
+
+    /**
 	 * Checks if player called mau.
 	 *
 	 * @return true, if has called mau
@@ -152,10 +153,20 @@ public class Player {
 		this.calledMau = calledMau;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return Id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Integer id) {
 		Id = id;
 	}

@@ -122,25 +122,6 @@ public class GameTable {
 	}
 
 	/**
-	 * Gets the table ID.
-	 *
-	 * @return the table ID
-	 */
-	public Integer getTableID() {
-		return gameTableID;
-	}
-
-	/**
-	 * Sets the table ID.
-	 *
-	 * @param tableID
-	 *            the new table ID
-	 */
-	public void setTableID(Integer tableID) {
-		this.gameTableID = tableID;
-	}
-
-	/**
 	 * Gets the drawing stack.
 	 *
 	 * @return the drawing stack

@@ -49,7 +49,7 @@ public interface TableService {
 	 *
 	 * @return the game table
 	 */
-	GameTable initTable();
+	GameTable initTable(String playerAmount);
 
 	/**
 	 * Skip turn.

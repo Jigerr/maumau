@@ -17,7 +17,6 @@ public class CardMasterServiceTest {
 	private CardMasterService cardMaster = new CardMasterServiceImpl();
 	private Stack stack;
 	private static final String PLAYER_ONE_ID = "1";
-	private static final String PLAYER_ONE_ACCOUNT_ID = "1";
 	private static final int DECK_SIZE = 32;
 
 	@Before
@@ -52,7 +51,7 @@ public class CardMasterServiceTest {
 
 	@Test
 	public void testIfPlayerHandIsFilled() {
-		Player player = new Player(PLAYER_ONE_ID, PLAYER_ONE_ACCOUNT_ID);
+		Player player = new Player(PLAYER_ONE_ID);
 		cardMaster.fillHands(player, stack);
 		Assert.assertTrue(player.getHand().size() == 5);
 	}

@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import de.berlin.htw.kba.maumau.table.controller.TableViewController;
 import de.berlin.htw.kba.maumau.table.view.TableView;
@@ -13,6 +14,7 @@ import de.berlin.htw.kba.maumau.table.view.TableViewImpl;
 
 @SpringBootApplication
 @ComponentScan("de.berlin.htw.kba.maumau")
+@EnableScheduling
 public class SpringBootConsoleApplication implements CommandLineRunner {
 
 	@Autowired

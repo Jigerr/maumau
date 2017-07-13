@@ -19,6 +19,7 @@ import de.berlin.htw.kba.maumau.table.events.LoadGameEvent;
 import de.berlin.htw.kba.maumau.table.events.LoadGameListEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayCardEvent;
 import de.berlin.htw.kba.maumau.table.events.PlayJackCardEvent;
+import de.berlin.htw.kba.maumau.table.events.PlayerAmountEvent;
 import de.berlin.htw.kba.maumau.table.events.SkipTurnEvent;
 import de.berlin.htw.kba.maumau.table.events.StartGameEvent;
 
@@ -38,7 +39,7 @@ public class TableViewImpl implements TableView {
 				System.out.println("Exit!");
 				System.exit(0);
 			} else if ("N".equals(input)) {
-				System.out.println("Starting New Game!");
+				System.out.println("Creating New Game! \n");
 				applicationEventPublisher.publishEvent(new StartGameEvent(this));
 				break;
 			} else if ("L".equals(input)) {
@@ -214,6 +215,35 @@ public class TableViewImpl implements TableView {
 		}
 
 	}
+	
+    @Override
+    public void printAmountOfPlayersMessage() {
+        System.out.println("How many players should play this game?");
+        
+        Scanner scanner = new Scanner(System.in);
+        while(true) {
+            System.out.println("Choose (2), (3) or (4) players.");
+            String playerAmount = null;
+            String input = scanner.nextLine();
+            switch(input) {
+                case "2":
+                case "3":
+                case "4":
+                    playerAmount = input;
+                    break;
+                default:
+                    break;                
+            }
+            if(playerAmount != null) {
+                PlayerAmountEvent event = new PlayerAmountEvent(this, playerAmount);
+                applicationEventPublisher.publishEvent(event);
+                break;
+            }
+            
+            
+        }
+        
+    }
 
 	public static boolean isInteger(String str) {
 		return str != null && str.length() > 0 && IntStream.range(0, str.length()).allMatch(
@@ -223,5 +253,7 @@ public class TableViewImpl implements TableView {
 	public static boolean isBetween(int x, int lower, int upper) {
 		return lower <= x && x <= upper;
 	}
+
+
 
 }
