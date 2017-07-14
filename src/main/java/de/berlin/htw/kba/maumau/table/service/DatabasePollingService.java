@@ -6,5 +6,7 @@ public interface DatabasePollingService {
 
     void setStartPolling(Boolean startPolling);
 
-    void stopPolling();
+    void removePolling();
+    
+    String getPlayerId();
 }

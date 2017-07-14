@@ -9,7 +9,7 @@ import de.berlin.htw.kba.maumau.table.events.PlayJackCardEvent;
 
 public interface TableView {
 
-	void initGame();
+	void initGameLobby();
 
 	void setEventPublisher(ApplicationEventPublisher applicationEventPublisher);
 

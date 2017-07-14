@@ -42,8 +42,8 @@ public class TableViewController {
         tableView.setEventPublisher(applicationEventPublisher);
     }
 
-    public void initGame() {
-        tableView.initGame();
+    public void initGameLobby() {
+        tableView.initGameLobby();
     }
 
     @EventListener
@@ -113,8 +113,10 @@ public class TableViewController {
 
     @EventListener
     private void handleLeaveGameEvent(LeaveGameEvent event) {
-        pollingService.stopPolling();
-        initGame();
+        String playerId = pollingService.getPlayerId();
+        pollingService.removePolling();
+        tableService.removeControlledByFromPlayer(playerId, event.getGameTable());
+        initGameLobby();
     }
 
     @EventListener
@@ -124,7 +126,7 @@ public class TableViewController {
         if (gameTable.getGameOver()) {
             tableView.printGameOverMessage(gameTable);
             tableService.removeGameTable(gameTable);
-            initGame();
+            initGameLobby();
         } else if (gameTable.getCondition().equals(Condition.SKIP)) {
             tableView.printSkipMessage(gameTable);
         } else {

@@ -28,7 +28,7 @@ public class TableViewImpl implements TableView {
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	@Override
-	public void initGame() {
+	public void initGameLobby() {
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
@@ -129,7 +129,7 @@ public class TableViewImpl implements TableView {
 							new CallMauEvent(this, gameTable.getGameTableID(), gameTable.getCurrentPlayer().getPlayerId()));
 				} else if ("L".equals(input)) {
 					System.out.println("Leaving game!");
-					applicationEventPublisher.publishEvent(new LeaveGameEvent(this));
+					applicationEventPublisher.publishEvent(new LeaveGameEvent(this, gameTable));
 				}
 			}
 		}
@@ -157,7 +157,7 @@ public class TableViewImpl implements TableView {
 		if (gameTablelist.isEmpty()) {
 			System.out.println("\n");
 			System.out.println("No games found. Returning to menu.");
-			initGame();
+			initGameLobby();
 		} else {
 			System.out.println("\n Listing all found games: \n");
 			for (GameTable table : gameTablelist) {

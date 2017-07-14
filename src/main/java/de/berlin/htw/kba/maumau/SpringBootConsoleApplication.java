@@ -31,6 +31,6 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		TableView tableView = new TableViewImpl();
 		controller.setView(tableView);
-		controller.initGame();
+		controller.initGameLobby();
 	}
 }

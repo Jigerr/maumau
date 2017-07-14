@@ -24,7 +24,7 @@ public class TableServiceImpl implements TableService {
     private static final int PENALTY_DRAW = 2;
 
     private static final int DEFAULT_DRAW = 1;
-    
+
     private static final String HUMAN = "human";
 
     private RuleSetService ruleSetService;
@@ -34,9 +34,8 @@ public class TableServiceImpl implements TableService {
     //	private List<GameTable> openTables = new ArrayList<GameTable>();
 
     private TableRepository repository;
-    
+
     private PlayerRepository playerRepository;
-    
 
     public TableServiceImpl(RuleSetService ruleSetService, CardMasterService cardMasterService, TableRepository repository, PlayerRepository playerRepository) {
         this.ruleSetService = ruleSetService;
@@ -207,7 +206,7 @@ public class TableServiceImpl implements TableService {
         gameTable.setCreated(new Date());
         cardMasterService.fillStack(gameTable.getDrawingStack());
         cardMasterService.shuffleStack(gameTable.getDrawingStack());
-        
+
         for (int i = 1; i <= Integer.parseInt(playerAmount); i++) {
             Player player = new Player(String.valueOf(i));
             cardMasterService.fillHands(player, gameTable.getDrawingStack());
@@ -253,19 +252,29 @@ public class TableServiceImpl implements TableService {
     public GameTable loadGame(Integer gameTableId) {
         return repository.findOne(gameTableId);
     }
-    
+
     @Override
     @Transactional
-    public String getFreeSLot(Integer gameTableId) {        
+    public String getFreeSLot(Integer gameTableId) {
         List<Player> playerList = playerRepository.findByGameTableId(gameTableId);
         String playerId = null;
-        for(Player player : playerList) {
-            if(player.getControlledBy() == null) {
+        for (Player player : playerList) {
+            if (player.getControlledBy() == null) {
                 playerId = player.getPlayerId();
                 break;
             }
-        }        
+        }
         return playerId;
+    }
+
+    public void removeControlledByFromPlayer(String playerId, GameTable gameTable) {
+
+        for (Player p : gameTable.getPlayers()) {
+            if (p.getPlayerId().equals(playerId)) {
+                p.setControlledBy(null);                
+            }
+        }
+        repository.save(gameTable);
     }
 
 }

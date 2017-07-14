@@ -82,5 +82,7 @@ public interface TableService {
 	GameTable loadGame(Integer gameTableId);
 
     String getFreeSLot(Integer gameTableId);
+    
+    void removeControlledByFromPlayer(String playerId, GameTable gameTable);
 
 }
