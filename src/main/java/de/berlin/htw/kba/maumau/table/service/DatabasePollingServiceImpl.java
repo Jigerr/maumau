@@ -1,7 +1,5 @@
 package de.berlin.htw.kba.maumau.table.service;
 
-import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,7 +10,6 @@ import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.events.DoTurnEvent;
 import de.berlin.htw.kba.maumau.table.events.LeaveGameEvent;
-import de.berlin.htw.kba.maumau.table.events.SkipTurnEvent;
 
 @Service
 public class DatabasePollingServiceImpl implements DatabasePollingService {
@@ -30,30 +27,22 @@ public class DatabasePollingServiceImpl implements DatabasePollingService {
     @Scheduled(fixedDelay = 5 * 1000)
     private void doPolling() throws InterruptedException {
 
-        if (startPolling == true) {
+        mainloop: while (startPolling == true) {
+            GameTable table = repository.findOne(clientUser.getCurrentTable());
+
+            for (Player p : table.getPlayers()) {
+                if (p.getControlledBy().equals("left")) {
+                    applicationEventPublisher.publishEvent(new LeaveGameEvent(clientUser.getCurrentPlayer(), table));
+                    setStartPolling(false);
+                    break mainloop;
+                }
+            }
 
             System.out.println("waiting for opponent's turn ...");
-            GameTable table = repository.findOne(clientUser.getCurrentTable());
 
             if (table.getCurrentPlayer().getPlayerId().equals(clientUser.getCurrentPlayer())) {
                 setStartPolling(false);
                 applicationEventPublisher.publishEvent(new DoTurnEvent(this, table.getGameTableID()));
-            }
-
-            for (Player p : table.getPlayers()) {
-                if (p.getControlledBy() == null) {
-
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("missing players ... press (L) to leave the game");
-                    while (true) {
-                        String input = scanner.nextLine();
-                        if ("L".equals(input)) {
-                            applicationEventPublisher.publishEvent(new LeaveGameEvent(clientUser.getCurrentPlayer(), table));
-                        }
-                        Thread.sleep(3 * 1000);
-                        break;
-                    }                    
-                }
             }
         }
 

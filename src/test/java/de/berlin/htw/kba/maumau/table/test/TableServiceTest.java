@@ -36,7 +36,7 @@ public class TableServiceTest {
         tableDummyService = new TableDummyServiceImpl();
         RuleSetService ruleSetService = Mockito.mock(RuleSetService.class);
         repository = Mockito.mock(TableRepository.class);
-        tableService = new TableServiceImpl(ruleSetService, cardMasterService, repository);  
+//        tableService = new TableServiceImpl(ruleSetService, cardMasterService, repository);  
         gameTable = tableDummyService.getNewTableDummy();
         player1 = tableDummyService.getPlayer1();
         player2 = tableDummyService.getPlayer2();
