@@ -259,7 +259,7 @@ public class TableServiceImpl implements TableService {
         List<Player> playerList = playerRepository.findByGameTableId(gameTableId);
         String playerId = null;
         for (Player player : playerList) {
-            if (player.getControlledBy() == null && "left".equals(player.getControlledBy())) {
+            if (player.getControlledBy() == null || "left".equals(player.getControlledBy())) {
                 playerId = player.getPlayerId();
                 break;
             }
