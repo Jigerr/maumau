@@ -102,8 +102,11 @@ public class TableViewController {
         GameTable gameTable = tableService.loadGame(event.getGameTableId());
         String playerId = tableService.getFreeSLot(gameTable.getGameTableID());
         if(playerId == null) {
-            System.out.println("Geht net");
+            System.out.println("Sorry, no free slot.");
+            tableView.initGameLobby();
         } else {
+            gameTable.setLeaver(false);
+            tableService.saveTable(gameTable);
             ClientUser clientUser = new ClientUser(gameTable.getGameTableID(), playerId);
             pollingService.setClientUser(clientUser);
             pollingService.setStartPolling(true);

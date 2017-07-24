@@ -1,5 +1,7 @@
 package de.berlin.htw.kba.maumau.table.service;
 
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,6 +12,7 @@ import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.events.DoTurnEvent;
 import de.berlin.htw.kba.maumau.table.events.LeaveGameEvent;
+import de.berlin.htw.kba.maumau.table.events.SkipTurnEvent;
 
 @Service
 public class DatabasePollingServiceImpl implements DatabasePollingService {
@@ -29,13 +32,12 @@ public class DatabasePollingServiceImpl implements DatabasePollingService {
         
         mainloop: if (startPolling == true) {
             GameTable table = repository.findOne(clientUser.getCurrentTable());
-
-            for (Player p : table.getPlayers()) {
-                if (p.getControlledBy() != null && p.getControlledBy().equals("left")) {
-                    applicationEventPublisher.publishEvent(new LeaveGameEvent(clientUser.getCurrentPlayer(), table));
-                    setStartPolling(false);
-                    break mainloop;
-                }
+            
+            if(table.getLeaver() == true) {
+                System.out.println("Someone left the game...returning to game lobby.");
+                applicationEventPublisher.publishEvent(new LeaveGameEvent(clientUser.getCurrentPlayer(), table));
+                setStartPolling(false);
+                break mainloop;
             }
 
             System.out.println("waiting for opponent's turn ...");

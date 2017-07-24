@@ -85,6 +85,9 @@ public class GameTable {
 	/** The created. */
 	@Column(name = "CREATED")
 	private Date created;
+	
+	@Column(name = "LEAVER")
+	private Boolean leaver = false;
 
 	/**
 	 * Gets the game table ID.
@@ -254,4 +257,12 @@ public class GameTable {
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
+
+    public Boolean getLeaver() {
+        return leaver;
+    }
+
+    public void setLeaver(Boolean leaver) {
+        this.leaver = leaver;
+    }
 }

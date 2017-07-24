@@ -85,4 +85,6 @@ public interface TableService {
     
     void removeControlledByFromPlayer(String playerId, GameTable gameTable);
 
+    void saveTable(GameTable gameTable);
+
 }

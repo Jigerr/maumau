@@ -259,7 +259,7 @@ public class TableServiceImpl implements TableService {
         List<Player> playerList = playerRepository.findByGameTableId(gameTableId);
         String playerId = null;
         for (Player player : playerList) {
-            if (player.getControlledBy() == null || "left".equals(player.getControlledBy())) {
+            if (player.getControlledBy() == null) {
                 playerId = player.getPlayerId();
                 break;
             }
@@ -267,13 +267,22 @@ public class TableServiceImpl implements TableService {
         return playerId;
     }
 
+    @Override
+    @Transactional
     public void removeControlledByFromPlayer(String playerId, GameTable gameTable) {
 
         for (Player p : gameTable.getPlayers()) {
             if (p.getPlayerId().equals(playerId)) {
-                p.setControlledBy("left");
+                p.setControlledBy(null);
             }
         }
+        gameTable.setLeaver(true);
+        repository.save(gameTable);
+    }
+    
+    @Override
+    @Transactional
+    public void saveTable(GameTable gameTable) {
         repository.save(gameTable);
     }
 
