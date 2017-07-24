@@ -26,8 +26,8 @@ public class DatabasePollingServiceImpl implements DatabasePollingService {
 
     @Scheduled(fixedDelay = 5 * 1000)
     private void doPolling() throws InterruptedException {
-
-        mainloop: while (startPolling == true) {
+        
+        mainloop: if (startPolling == true) {
             GameTable table = repository.findOne(clientUser.getCurrentTable());
 
             for (Player p : table.getPlayers()) {
@@ -45,7 +45,6 @@ public class DatabasePollingServiceImpl implements DatabasePollingService {
                 applicationEventPublisher.publishEvent(new DoTurnEvent(this, table.getGameTableID()));
             }
         }
-
     }
 
     public void removePolling() {
