@@ -31,7 +31,7 @@ public class DatabasePollingServiceImpl implements DatabasePollingService {
             GameTable table = repository.findOne(clientUser.getCurrentTable());
 
             for (Player p : table.getPlayers()) {
-                if (p.getControlledBy().equals("left")) {
+                if (p.getControlledBy() != null && p.getControlledBy().equals("left")) {
                     applicationEventPublisher.publishEvent(new LeaveGameEvent(clientUser.getCurrentPlayer(), table));
                     setStartPolling(false);
                     break mainloop;
