@@ -130,6 +130,7 @@ public class TableViewImpl implements TableView {
 				} else if ("L".equals(input)) {
 					System.out.println("Leaving game!");
 					applicationEventPublisher.publishEvent(new LeaveGameEvent(this, gameTable));
+					break;
 				}
 			}
 		}

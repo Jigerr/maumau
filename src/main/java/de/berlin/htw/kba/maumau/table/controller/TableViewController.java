@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 
+import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.events.CallMauEvent;
@@ -101,17 +102,22 @@ public class TableViewController {
     private void handleLoadGameEvent(LoadGameEvent event) {
         GameTable gameTable = tableService.loadGame(event.getGameTableId());
         String playerId = tableService.getFreeSLot(gameTable.getGameTableID());
-        if(playerId == null) {
+        if (playerId == null) {
             System.out.println("Sorry, no free slot.");
             tableView.initGameLobby();
         } else {
             gameTable.setLeaver(false);
+            for (Player p : gameTable.getPlayers()) {
+                if (p.getPlayerId().equals(playerId)) {
+                    p.setControlledBy("human");
+                }
+            }
             tableService.saveTable(gameTable);
             ClientUser clientUser = new ClientUser(gameTable.getGameTableID(), playerId);
             pollingService.setClientUser(clientUser);
             pollingService.setStartPolling(true);
         }
-        
+
     }
 
     @EventListener
