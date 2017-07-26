@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Card.
  */
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Table(name = "CARD")
 public class Card {
 	
+	/** The Id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "ID")
@@ -27,6 +29,9 @@ public class Card {
 	@Column(name = "RANK")
 	private String rank;
 
+	/**
+	 * Instantiates a new card.
+	 */
 	public Card() {
 	}
 	/**
@@ -42,19 +47,39 @@ public class Card {
 		this.rank = rank;
 	}
 
+	/**
+	 * Instantiates a new card.
+	 *
+	 * @param card the card
+	 */
 	public Card(Card card) {
 		this.suit = card.getSuit();
 		this.rank = card.getRank();
 	}
 	
+	/**
+	 * Prints the card.
+	 *
+	 * @return the string
+	 */
 	public String printCard() {
 		return rank + " of " + suit;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return Id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Integer id) {
 		Id = id;
 	}

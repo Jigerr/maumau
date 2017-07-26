@@ -20,6 +20,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Stack.
  */
@@ -27,6 +28,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "STACK")
 public class Stack {
 
+	/** The Id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "ID")
@@ -46,10 +48,20 @@ public class Stack {
 
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return Id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Integer id) {
 		Id = id;
 	}

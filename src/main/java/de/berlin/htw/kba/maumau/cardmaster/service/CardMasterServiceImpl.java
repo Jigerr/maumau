@@ -8,12 +8,22 @@ import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CardMasterServiceImpl.
+ */
 @Service
 public class CardMasterServiceImpl implements CardMasterService {
 
+	/**
+	 * Instantiates a new card master service impl.
+	 */
 	public CardMasterServiceImpl() {
 	}
 
+	/* (non-Javadoc)
+	 * @see de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService#fillStack(de.berlin.htw.kba.maumau.table.db.Stack)
+	 */
 	@Override
 	public Stack fillStack(Stack stack) {
 
@@ -32,6 +42,9 @@ public class CardMasterServiceImpl implements CardMasterService {
 		return stack;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService#shuffleStack(de.berlin.htw.kba.maumau.table.db.Stack)
+	 */
 	@Override
 	public Stack shuffleStack(Stack stack) {
 
@@ -48,9 +61,12 @@ public class CardMasterServiceImpl implements CardMasterService {
 		return stack;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.berlin.htw.kba.maumau.cardmaster.service.CardMasterService#fillHands(de.berlin.htw.kba.maumau.player.db.Player, de.berlin.htw.kba.maumau.table.db.Stack, int)
+	 */
 	@Override
-	public void fillHands(Player player, Stack drawingStack) {
-		for (int i = 0; i < 5; i++) {
+	public void fillHands(Player player, Stack drawingStack, int amountOfCards) {
+		for (int i = 0; i < amountOfCards ; i++) {
 			player.addCard(drawingStack.getCardList().get(drawingStack.getCardList().size()-1));
 			drawingStack.getCardList().remove(drawingStack.getCardList().size()-1);
 		}

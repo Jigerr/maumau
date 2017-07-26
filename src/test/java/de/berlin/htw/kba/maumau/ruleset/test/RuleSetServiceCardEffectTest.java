@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package de.berlin.htw.kba.maumau.ruleset.test;
 
 import java.util.Arrays;
@@ -15,24 +18,46 @@ import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetServiceImpl;
 import de.berlin.htw.kba.maumau.table.db.Card;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RuleSetServiceCardEffectTest.
+ */
 @RunWith(Parameterized.class)
 public class RuleSetServiceCardEffectTest {
 
+	/** The rule set. */
 	private RuleSetService ruleSet;
 
+	/** The current card. */
 	private Card currentCard;
+	
+	/** The expected result. */
 	private CardEffect expectedResult;
 	
+	/**
+	 * Sets the up.
+	 */
 	@Before
 	public void setUp() {
 	    ruleSet = new RuleSetServiceImpl();
 	}	
 
+	/**
+	 * Instantiates a new rule set service card effect test.
+	 *
+	 * @param currentCard the current card
+	 * @param expectedResult the expected result
+	 */
 	public RuleSetServiceCardEffectTest(Card currentCard, CardEffect expectedResult) {
 		this.currentCard = currentCard;
 		this.expectedResult = expectedResult;
 	}
 	
+	/**
+	 * Data.
+	 *
+	 * @return the collection
+	 */
 	@Parameters
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] { 
@@ -46,6 +71,9 @@ public class RuleSetServiceCardEffectTest {
 		});
 	}
 	
+	/**
+	 * Test get card effect.
+	 */
 	@Test
 	public void testGetCardEffect() {
 

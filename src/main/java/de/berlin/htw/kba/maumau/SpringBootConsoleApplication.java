@@ -12,14 +12,25 @@ import de.berlin.htw.kba.maumau.table.controller.TableViewController;
 import de.berlin.htw.kba.maumau.table.view.TableView;
 import de.berlin.htw.kba.maumau.table.view.TableViewImpl;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpringBootConsoleApplication.
+ */
 @SpringBootApplication
 @ComponentScan("de.berlin.htw.kba.maumau")
 @EnableScheduling
 public class SpringBootConsoleApplication implements CommandLineRunner {
 
+	/** The controller. */
 	@Autowired
 	private TableViewController controller;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		SpringApplication app = new SpringApplication(SpringBootConsoleApplication.class);
 		app.setBannerMode(Banner.Mode.OFF);
@@ -27,6 +38,9 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 		app.run(args);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.boot.CommandLineRunner#run(java.lang.String[])
+	 */
 	@Override
 	public void run(String... args) throws Exception {
 		TableView tableView = new TableViewImpl();

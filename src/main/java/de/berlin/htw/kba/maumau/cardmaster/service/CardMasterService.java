@@ -3,6 +3,7 @@ package de.berlin.htw.kba.maumau.cardmaster.service;
 import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.table.db.Stack;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface CardMasterService.
  */
@@ -29,8 +30,9 @@ public interface CardMasterService {
 	/**
 	 * Show cards.
 	 *
-	 * @param stack
-	 *            the stack
+	 * @param player the player
+	 * @param drawingStack the drawing stack
+	 * @param amointOfCards the amoint of cards
 	 */
 	// void showCards(Stack stack);
 
@@ -42,6 +44,6 @@ public interface CardMasterService {
 	 * @param drawingStack
 	 *            the drawing stack
 	 */
-	void fillHands(Player player, Stack drawingStack);
+	void fillHands(Player player, Stack drawingStack, int amointOfCards);
 
 }

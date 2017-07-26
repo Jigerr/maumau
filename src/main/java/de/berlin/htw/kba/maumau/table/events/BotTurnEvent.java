@@ -4,20 +4,20 @@ import org.springframework.context.ApplicationEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class DoTurnEvent.
+ * The Class BotTurnEvent.
  */
-public class DoTurnEvent extends ApplicationEvent{
-    
+public class BotTurnEvent extends ApplicationEvent {
+
     /** The game table id. */
     private Integer gameTableId;
 
     /**
-     * Instantiates a new do turn event.
+     * Instantiates a new bot turn event.
      *
      * @param source the source
      * @param gameTableId the game table id
      */
-    public DoTurnEvent(Object source, Integer gameTableId) {
+    public BotTurnEvent(Object source, Integer gameTableId) {
         super(source);
         this.gameTableId = gameTableId;
     }
@@ -30,5 +30,5 @@ public class DoTurnEvent extends ApplicationEvent{
     public Integer getGameTableId() {
         return gameTableId;
     }
-
+    
 }

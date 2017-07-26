@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
+/**
+ * The Interface TableRepository.
+ */
 @Repository
 public interface TableRepository extends JpaRepository<GameTable, Integer> {
 

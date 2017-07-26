@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package de.berlin.htw.kba.maumau.table.test;
 
 import org.junit.After;
@@ -16,31 +19,49 @@ import de.berlin.htw.kba.maumau.player.db.Player;
 import de.berlin.htw.kba.maumau.ruleset.service.CardEffect;
 import de.berlin.htw.kba.maumau.ruleset.service.Condition;
 import de.berlin.htw.kba.maumau.ruleset.service.RuleSetService;
+import de.berlin.htw.kba.maumau.ruleset.service.WrongCardException;
 import de.berlin.htw.kba.maumau.table.db.Card;
 import de.berlin.htw.kba.maumau.table.db.TableRepository;
 import de.berlin.htw.kba.maumau.table.db.GameTable;
 import de.berlin.htw.kba.maumau.table.service.TableServiceImpl;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TableServiceMockTest.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class TableServiceMockTest {
 
+    /** The Constant PLAYER_ONE_ACCOUNT_ID. */
     private static final String PLAYER_ONE_ACCOUNT_ID = "1";
+    
+    /** The Constant TABLE_ID. */
     private static final Integer TABLE_ID = 1;
 
+    /** The table dummy service. */
     private TableDummyService tableDummyService;
 
+    /** The rule set service. */
     @Mock
     private RuleSetService ruleSetService;
 
+    /** The repository. */
     @Mock
     private TableRepository repository;
 
+    /** The table service. */
     @InjectMocks
     private TableServiceImpl tableService;
 
+    /** The game table. */
     private GameTable gameTable;
+    
+    /** The player 1. */
     private Player player1;
 
+    /**
+     * Inits the.
+     */
     @Before
     public void init() {
         tableDummyService = new TableDummyServiceImpl();
@@ -50,8 +71,13 @@ public class TableServiceMockTest {
         Mockito.when(repository.findOne(gameTable.getGameTableID())).thenReturn(gameTable);
     }
 
+    /**
+     * Test plus six condition.
+     *
+     * @throws WrongCardException the wrong card exception
+     */
     @Test
-    public void testPlusSixCondition() {
+    public void testPlusSixCondition() throws WrongCardException {
         Card playCard = new Card(Suits.HEARTS.getSuit(), Ranks.SEVEN.getValue());
         player1.addCard(playCard);
         gameTable.getPlayingStack().getCardList().add(new Card(Suits.CLUBS.getSuit(), Ranks.SEVEN.getValue()));
